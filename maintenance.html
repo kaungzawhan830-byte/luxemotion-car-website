@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Maintenance Tips | LuxeMotion</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css?v=2">
+  <style>
+        :root {
+            --blood-red: #8B0000;
+            --dark-red: #660000;
+            --black: #121212;
+            --dark-gray: #1a1a1a;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --card-bg: #1a1a1a;
+            --header-bg: #121212;
+            --footer-bg: #1a1a1a;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f5f5f5;
+            --text-color: #121212;
+            --card-bg: #ffffff;
+            --header-bg: #ffffff;
+            --footer-bg: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+
+
+        /* Maintenance Page Specific Styles */
+        .hero-gradient {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 60px 0 30px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 3px;
+            background-color: var(--blood-red);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 0.375rem 0.875rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .read-time {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            color: var(--muted-text);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--blood-red);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: var(--dark-red);
+        }
+
+        /* Maintenance Grid */
+        .maintenance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .maintenance-card {
+            background-color: var(--card-bg);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #333;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .maintenance-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .maintenance-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gradient-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+        }
+
+        .maintenance-content {
+            padding: 1.75rem;
+        }
+
+        .maintenance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .maintenance-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .maintenance-description {
+            color: var(--muted-text);
+            margin-bottom: 1.25rem;
+            line-height: 1.7;
+        }
+
+        .maintenance-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #333;
+        }
+
+        .author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .author-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--subtle-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--accent-text);
+        }
+
+        .author-name {
+            font-size: 0.875rem;
+            color: var(--muted-text);
+        }
+
+        .date {
+            font-size: 0.875rem;
+            color: var(--muted-text);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--blood-red);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            font-size: 0.75rem;
+            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.4);
+            z-index: 10;
+        }
+
+        .maintenance-detail {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .maintenance-detail-content {
+            background-color: var(--card-bg);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .maintenance-detail-header {
+            margin-bottom: 2rem;
+        }
+
+        .maintenance-detail-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .maintenance-detail-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .maintenance-detail-body {
+            line-height: 1.8;
+        }
+
+        .maintenance-detail-body h3 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--accent-text);
+        }
+
+        .maintenance-detail-body p {
+            margin-bottom: 1rem;
+        }
+
+        .maintenance-detail-body ul, .maintenance-detail-body ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .maintenance-detail-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: color 0.3s;
+        }
+
+        .back-button:hover {
+            color: var(--accent-text);
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  
+ <link rel="stylesheet" href="theme.css?v=2">
+<link rel="stylesheet" href="mobile.css?v=3">
+<script src="mobile.js?v=3" defer></script>
+</head>
+ <body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="https://www.shutterstock.com/image-vector/lm-letter-vector-logo-260nw-633760886.jpg" alt="LuxeMotion Logo" class="circular-logo-img">
+                <h1>Luxe<span>Motion</span></h1>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="H2.html"><i class="fas fa-home"></i> <span>Home</span></a></li>
+                    <li><a href="AU.html"><i class="fas fa-info-circle"></i> <span>About</span></a></li>
+
+                    <li class="dropdown">
+                        <a href="Slast.html"><i class="fas fa-shopping-cart"></i> 
+                            <span>Shop</span> <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="Toyota.html">Toyota</a>
+                            <a href="Honda.html">Honda</a>
+                            <a href="bmw.html">BMW</a>
+                            <a href="Slast.html">Nissan</a>
+                            <a href="Slast.html">Hyundai</a>
+                            <a href="Slast.html">Kai</a>
+                        </div>
+                    </li>
+                     
+                     <li class="dropdown">
+                        <a href="Slast.html"><i class="fas fa-flag"></i> <span>Brands</span> <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="japan.html">Japanese</a>
+                            <a href="German.html">German</a>
+                            <a href="japan.html">Korean</a>
+                            <a href="German.html">American</a>
+                           
+                        </div>
+                    </li>
+
+                     <li><a href="P3.html"><i class="fas fa-cogs"></i> <span>Parts</span></a></li>
+
+                    <li><a href="OF1.html"><i class="fas fa-tag"></i> <span>Offers</span></a></li>
+
+                    <li><a href="BLO.html"><i class="fas fa-newspaper"></i> <span>Blog</span></a></li>
+
+                    <li><a href="faq1.html"><i class="fas fa-question-circle"></i> <span>FAQ</span></a></li>
+
+                    <li><a href="CT.html"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-icons">
+                <a href="garage_1.html" title="Garage"><i class="fas fa-warehouse"></i></a>
+                <!-- Updated User Icon - Now Clickable -->
+                <a href="#" class="user-icon" title="Account" id="userIcon">
+                    <i class="fas fa-user"></i>
+                </a>
+
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+  <section style="
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    height: 90vh; /* full-screen hero */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+" class="mobile-video-section">
+
+    <!-- BACKGROUND VIDEO -->
+    <video 
+        autoplay 
+        muted 
+        loop 
+        playsinline
+        style="
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        "
+     class="mobile-video-media">
+        <source src="mmm.mp4" type="video/mp4">
+    </video>
+
+    <!-- DARK OVERLAY -->
+    <div style="
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 1;
+    " class="theme-inverse mobile-video-shade"></div>
+
+    <!-- CENTERED TEXT CONTENT -->
+    <div style="
+        position: relative;
+        z-index: 10;
+        max-width: 900px;
+        padding: 1rem;
+    " class="mobile-video-copy">
+
+        <div style="
+            display: inline-block;
+            background-color: var(--blood-red);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+        " class="theme-inverse">
+            🔧 MAINTENANCE TIPS
+        </div>
+
+        <h1 style="
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        ">
+            Expert Car Care Advice
+        </h1>
+
+        <p style="
+            font-size: 1.25rem;
+            color: var(--muted-text);
+            margin: 0 auto 2.5rem;
+        ">
+            Keep your luxury vehicle in pristine condition with our comprehensive maintenance guides
+        </p>
+
+    </div>
+</section>
+
+
+    <!-- Maintenance Tips Grid -->
+    <section id="maintenance-tips" style="padding: 3rem 0; background-color: var(--bg-color);" class="theme-surface">
+        <div class="maintenance-grid">
+            <!-- Maintenance Tip 1 -->
+            <article class="maintenance-card">
+                <div class="maintenance-image theme-inverse" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                    <img src="https://gaadiwaadi.com/wp-content/uploads/2018/12/wintercar-care-tips.jpg" alt="Winter Car Care" style="width: 100%;">
+                    <div class="gradient-overlay"></div>
+                    <div class="featured-badge">
+                        FEATURED
+                    </div>
+                </div>
+                <div class="maintenance-content">
+                    <div class="maintenance-header">
+                        <span class="category-badge" style="background-color: var(--subtle-bg); color: #10b981;">Essential</span>
+                        <span class="read-time">⏱️ 5 min read</span>
+                    </div>
+                    <h3 class="maintenance-title">Winter Car Care: Complete Maintenance Checklist</h3>
+                    <p class="maintenance-description">Prepare your luxury vehicle for cold weather with our comprehensive guide covering battery care, tire maintenance, and winterization essentials.</p>
+                    <div class="maintenance-footer">
+                        <div class="author">
+                            <div class="author-avatar">
+                                JD
+                            </div>
+                            <span class="author-name">John Davis</span>
+                        </div>
+                        <span class="date">Dec 15, 2024</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Maintenance Tip 2 -->
+            <article class="maintenance-card">
+                <div class="maintenance-image theme-inverse" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">
+                     <img src="https://tse3.mm.bing.net/th/id/OIP.y8WNgQTdNxsHH3we5y02JQHaEK?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Oil Change Intervals" style="width: 100%;">
+                    <div class="gradient-overlay"></div>
+                </div>
+                <div class="maintenance-content">
+                    <div class="maintenance-header">
+                        <span class="category-badge" style="background-color: var(--subtle-bg); color: #06b6d4;">Guide</span>
+                        <span class="read-time">⏱️ 7 min read</span>
+                    </div>
+                    <h3 class="maintenance-title">Oil Change Intervals: When Should You Service?</h3>
+                    <p class="maintenance-description">Learn the optimal oil change schedule for luxury vehicles, synthetic vs conventional oil differences, and signs your car needs immediate service.</p>
+                    <div class="maintenance-footer">
+                        <div class="author">
+                            <div class="author-avatar">
+                                SM
+                            </div>
+                            <span class="author-name">Sarah Martinez</span>
+                        </div>
+                        <span class="date">Dec 12, 2024</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Maintenance Tip 3 -->
+            <article class="maintenance-card">
+                <div class="maintenance-image theme-inverse" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.tKlvA8BaE3rFXjmLgPKUBQHaE7?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Tire Pressure Monitoring" style="width: 100%;">
+                    <div class="gradient-overlay"></div>
+                </div>
+                <div class="maintenance-content">
+                    <div class="maintenance-header">
+                        <span class="category-badge" style="background-color: var(--subtle-bg); color: #8b5cf6;">Tips</span>
+                        <span class="read-time">⏱️ 4 min read</span>
+                    </div>
+                    <h3 class="maintenance-title">Tire Pressure Monitoring: Stay Safe on the Road</h3>
+                    <p class="maintenance-description">Discover why proper tire pressure matters for performance and safety, how to check it correctly, and what to do when the TPMS warning appears.</p>
+                    <div class="maintenance-footer">
+                        <div class="author">
+                            <div class="author-avatar">
+                                RJ
+                            </div>
+                            <span class="author-name">Robert Johnson</span>
+                        </div>
+                        <span class="date">Dec 10, 2024</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Maintenance Tip 4 -->
+            <article class="maintenance-card">
+                <div class="maintenance-image theme-inverse" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.8qof7TICBU4J0J45Dm5jaAHaE7?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Tire Pressure Monitoring" style="width: 100%;">
+                    <div class="gradient-overlay"></div>
+                </div>
+                <div class="maintenance-content">
+                    <div class="maintenance-header">
+                        <span class="category-badge" style="background-color: var(--subtle-bg); color: #f59e0b;">Electrical</span>
+                        <span class="read-time">⏱️ 6 min read</span>
+                    </div>
+                    <h3 class="maintenance-title">Battery Maintenance for Modern Vehicles</h3>
+                    <p class="maintenance-description">Learn how to extend your car battery's life, recognize warning signs of failure, and properly maintain your vehicle's electrical system.</p>
+                    <div class="maintenance-footer">
+                        <div class="author">
+                            <div class="author-avatar">
+                                AK
+                            </div>
+                            <span class="author-name">Amanda King</span>
+                        </div>
+                        <span class="date">Dec 8, 2024</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Maintenance Tip 5 -->
+            <article class="maintenance-card">
+                <div class="maintenance-image theme-inverse" style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);">
+                    <img src="https://tse2.mm.bing.net/th/id/OIP.ZVSMjyAVKzrFBl1ZnlLxbgHaE8?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Tire Pressure Monitoring" style="width: 100%;">
+                    <div class="gradient-overlay"></div>
+                </div>
+                <div class="maintenance-content">
+                    <div class="maintenance-header">
+                        <span class="category-badge" style="background-color: var(--subtle-bg); color: #ec4899;">Brakes</span>
+                        <span class="read-time">⏱️ 8 min read</span>
+                    </div>
+                    <h3 class="maintenance-title">Brake System Inspection and Maintenance</h3>
+                    <p class="maintenance-description">Understand when to replace brake pads and rotors, how to recognize brake system issues, and proper maintenance for optimal stopping power.</p>
+                    <div class="maintenance-footer">
+                        <div class="author">
+                            <div class="author-avatar">
+                                TM
+                            </div>
+                            <span class="author-name">Thomas Miller</span>
+                        </div>
+                        <span class="date">Dec 5, 2024</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Maintenance Tip 6 -->
+            <article class="maintenance-card">
+                <div class="maintenance-image theme-inverse" style="background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.RBThbitARkLb67SgHSRFkAHaEo?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Tire Pressure Monitoring" style="width: 100%;">
+                    <div class="gradient-overlay"></div>
+                </div>
+                <div class="maintenance-content">
+                    <div class="maintenance-header">
+                        <span class="category-badge" style="background-color: var(--subtle-bg); color: #14b8a6;">Cooling</span>
+                        <span class="read-time">⏱️ 5 min read</span>
+                    </div>
+                    <h3 class="maintenance-title">Cooling System Maintenance for Optimal Performance</h3>
+                    <p class="maintenance-description">Learn how to maintain your vehicle's cooling system, check coolant levels, and prevent overheating issues during hot weather.</p>
+                    <div class="maintenance-footer">
+                        <div class="author">
+                            <div class="author-avatar">
+                                LW
+                            </div>
+                            <span class="author-name">Lisa Wilson</span>
+                        </div>
+                        <span class="date">Dec 3, 2024</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>LUXE MOTION</h3>
+                <ul>
+                    <li><a href="H2.html" style="color:red;">Home</a></li>
+                    <li><a href="AU.html" style="color:red;">About Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>SHOP</h3>
+                <ul>
+                    <li><a href="Slast.html" style="color:red;">Shop / Cars</a></li>
+                    <li><a href="P3.html" style="color:red;">Car Parts & Accessories</a></li>
+                    <li><a href="OF1.html" style="color:red;">Special Offers / Promotions</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>UPDATES</h3>
+                <ul>
+                    <li><a href="BLO.html" style="color:red;">Blog / News</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>SUPPORT</h3>
+                <ul>
+                    <li><a href="faq1.html" style="color:red;">Support / FAQ</a></li>
+                    <li><a href="CT.html" style="color:red;">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>ACCOUNT</h3>
+                <ul>
+                    <li><a href="garage_1.html" style="color:red;">Garage</a></li>
+               
+                </ul>
+
+                <div class="social-icons">
+                   <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+<a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+<a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+
+
+
+                <!-- NEW: Car Brand Icons Section -->
+        <div class="brand-icons-section">
+            <h3>OUR BRANDS</h3>
+            <div class="brand-icons">
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/toyota.jpg" alt="Toyota">
+                    </div>
+                    <div class="brand-icon-name">Toyota</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/honda.jpg" alt="Honda">
+                    </div>
+                    <div class="brand-icon-name">Honda</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/nissan.svg" alt="Nissan">
+                    </div>
+                    <div class="brand-icon-name">Nissan</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/hyundai.jpg" alt="Hyundai">
+                    </div>
+                    <div class="brand-icon-name">Hyundai</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/kia.jpg" alt="Kia">
+                    </div>
+                    <div class="brand-icon-name">Kia</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/ford.svg" alt="Ford">
+                    </div>
+                    <div class="brand-icon-name">Ford</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/chevrolet.jpg" alt="Chevrolet">
+                    </div>
+                    <div class="brand-icon-name">Chevrolet</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/bmw.svg" alt="BMW">
+                    </div>
+                    <div class="brand-icon-name">BMW</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/mercedes-benz.svg" alt="Mercedes-Benz">
+                    </div>
+                    <div class="brand-icon-name">Mercedes-Benz</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/audi.jpg" alt="Audi">
+                    </div>
+                    <div class="brand-icon-name">Audi</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 LuxeMotion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or default to dark
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        
+        // Update icon based on current theme
+        if (currentTheme === 'light') {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            // Toggle between dark and light themes
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update icon
+            if (newTheme === 'light') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+    </script>
+ </body>
+</html>

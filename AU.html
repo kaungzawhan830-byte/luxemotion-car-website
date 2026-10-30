@@ -1,0 +1,2024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - LuxeMotion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --blood-red: #8B0000;
+            --dark-red: #660000;
+            --darker-red: #4a0000;
+            --black: #121212;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #2a2a2a;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --card-bg: #1a1a1a;
+            --header-bg: #121212;
+            --footer-bg: #1a1a1a;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f5f5f5;
+            --text-color: #121212;
+            --card-bg: #ffffff;
+            --header-bg: #ffffff;
+            --footer-bg: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* LOGO DESIGN */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .circular-logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            border: 2px solid var(--blood-red);
+        }
+
+        .logo h1 {
+            color: var(--text-color);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+
+        .logo span {
+            color: #FF0000;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            position: relative;
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 0;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Hover line effect for navigation */
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--blood-red);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-text);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--card-bg);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-top: 3px solid var(--blood-red);
+        }
+
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--blood-red);
+            color: var(--white);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-icons a {
+            color: var(--text-color);
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .nav-icons a:hover {
+            color: var(--accent-text);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .theme-toggle:hover {
+            color: var(--accent-text);
+        }
+
+        /* Updated Page Header - LARGER */
+        .page-header {
+            position: relative;
+            height: 600px; /* Increased from 500px to 600px */
+            overflow: hidden;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .header-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .page-header-content {
+            position: relative;
+            z-index: 1;
+            padding: 40px; /* Increased padding */
+            background: rgba(0, 0, 0, 0.5); /* Slightly darker overlay for better text readability */
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .page-header-content h1 {
+            font-size: 52px; /* Slightly larger font */
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9); /* Stronger shadow */
+        }
+
+        .page-header-content p {
+            font-size: 22px; /* Slightly larger font */
+            max-width: 700px;
+            margin: 0 auto 30px; /* Added bottom margin for button */
+        }
+
+        /* CTA Button */
+        .cta-button {
+            background: linear-gradient(45deg, var(--blood-red), var(--dark-red));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(45deg, var(--dark-red), var(--darker-red));
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(139, 0, 0, 0.4);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 3px;
+            background-color: var(--blood-red);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title p {
+            margin-top: 15px;
+            color: var(--muted-text);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Company History */
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--blood-red);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: var(--dark-gray);
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-content h3 {
+            color: var(--accent-text);
+            margin-bottom: 10px;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -13px;
+            background-color: var(--blood-red);
+            border: 4px solid var(--black);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -12px;
+        }
+
+        /* Mission & Vision */
+        .mission-vision {
+            background-color: var(--dark-gray);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .mv-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .mv-item {
+            flex: 1;
+            min-width: 300px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .mv-item.mission {
+            background-color: var(--darker-red);
+        }
+
+        .mv-icon {
+            font-size: 50px;
+            color: var(--accent-text);
+            margin-bottom: 20px;
+        }
+
+        .mv-item h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        /* Why Choose Us */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature {
+            background-color: var(--dark-gray);
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            color: var(--accent-text);
+            margin-bottom: 20px;
+        }
+
+        .feature h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        /* Meet Our Team */
+        .team {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .team-member {
+            background-color: var(--dark-gray);
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .member-img {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .member-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .team-member:hover .member-img img {
+            transform: scale(1.1);
+        }
+
+        .member-info {
+            padding: 20px;
+        }
+
+        .member-info h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        .member-role {
+            color: var(--accent-text);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .member-social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .member-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background-color: var(--black);
+            border-radius: 50%;
+            color: var(--white);
+            transition: all 0.3s;
+        }
+
+        .member-social a:hover {
+            background-color: var(--blood-red);
+            transform: translateY(-3px);
+        }
+
+        /* Stats Section */
+        .stats {
+            position: relative;
+            padding: 80px 5%;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .stats-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .stats::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item {
+            margin: 20px;
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--accent-text);
+            margin-bottom: 10px;
+        }
+
+        .stat-text {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            padding: 60px 0 20px;
+            transition: background-color 0.3s;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 30px;
+        }
+
+        .footer-column h3 {
+            color: var(--accent-text);
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--blood-red);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--muted-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent-text);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--bg-color);
+            border-radius: 50%;
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--blood-red);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--muted-text);
+            font-size: 14px;
+        }
+
+        /* Car Brand Icons Section */
+        .brand-icons-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 20px;
+        }
+
+        .brand-icons-section h3 {
+            color: var(--accent-text);
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .brand-icons-section h3::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 2px;
+            background-color: var(--blood-red);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .brand-icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .brand-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80px;
+            transition: transform 0.3s;
+        }
+
+        .brand-icon:hover {
+            transform: translateY(-5px);
+        }
+
+        .brand-icon-img {
+            width: 60px;
+            height: 60px;
+            background-color: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .brand-icon-img img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .brand-icon-name {
+            font-size: 12px;
+            text-align: center;
+            color: var(--muted-text);
+            font-weight: 500;
+        }
+
+        /* NEW: Login/Signup Modal Styles */
+        .user-icon {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .user-icon:hover {
+            color: var(--accent-text);
+            transform: scale(1.1);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .auth-modal {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .auth-modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            background-color: var(--blood-red);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-logo-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .modal-logo-text {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .modal-logo-text span {
+            color: #FFD700;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .close-modal:hover {
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 30px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--bg-color);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            color: var(--text-color);
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--blood-red);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remember-me input {
+            margin: 0;
+        }
+
+        .forgot-password {
+            color: var(--accent-text);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .forgot-password:hover {
+            color: var(--accent-hover);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--blood-red);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--dark-red);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+            color: var(--muted-text);
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 45%;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 45%;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .social-login {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: var(--bg-color);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            background-color: rgba(139, 0, 0, 0.1);
+            border-color: var(--blood-red);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--muted-text);
+        }
+
+        .signup-link a {
+            color: var(--accent-text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .signup-link a:hover {
+            color: var(--accent-hover);
+        }
+
+        /* FIXED: Tab Content Styling */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* NEW: Success Notification Styles */
+        .success-notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--card-bg);
+            border-left: 5px solid var(--blood-red);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .success-notification.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .success-icon {
+            font-size: 60px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .success-title {
+            font-size: 24px;
+            color: var(--accent-text);
+            margin-bottom: 15px;
+        }
+
+        .success-message {
+            color: var(--text-color);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .success-button {
+            background-color: var(--blood-red);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .success-button:hover {
+            background-color: var(--dark-red);
+        }
+
+        /* Responsive Fix */
+        @media (max-width: 768px) {
+            .modal-body {
+                max-height: 60vh;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .modal-body {
+                max-height: 50vh;
+                padding: 20px;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .footer-content {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+
+            .page-header-content h1 {
+                font-size: 36px;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+
+            .timeline-item::after {
+                left: 18px;
+            }
+
+            .timeline-item:nth-child(even)::after {
+                left: 18px;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .brand-icons {
+                gap: 20px;
+            }
+            
+            .brand-icon {
+                width: 70px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .mv-container {
+                flex-direction: column;
+            }
+
+            .features, .team {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-container {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul li a span {
+                display: none;
+            }
+            
+            nav ul li a i {
+                font-size: 20px;
+            }
+            
+            .brand-icons {
+                gap: 15px;
+            }
+            
+            .brand-icon {
+                width: 60px;
+            }
+            
+            .brand-icon-img {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .brand-icon-img img {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .brand-icon-name {
+                font-size: 10px;
+            }
+        }
+    </style>
+<link rel="stylesheet" href="theme.css?v=2">
+<link rel="stylesheet" href="mobile.css?v=3">
+<script src="mobile.js?v=3" defer></script>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="https://www.shutterstock.com/image-vector/lm-letter-vector-logo-260nw-633760886.jpg" alt="LuxeMotion Logo" class="circular-logo-img">
+                <h1>Luxe<span>Motion</span></h1>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="H2.html"><i class="fas fa-home"></i> <span>Home</span></a></li>
+                    <li><a href="AU.html"><i class="fas fa-info-circle"></i> <span>About</span></a></li>
+
+                    <li class="dropdown">
+                        <a href="Slast.html"><i class="fas fa-shopping-cart"></i> 
+                            <span>Shop</span> <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="Slast.html">Sedan</a>
+                            <a href="Slast.html">SUV</a>
+                            <a href="Slast.html">Truck</a>
+                            <a href="Slast.html">Sports</a>
+                            <a href="Slast.html">Coupe</a>
+                            <a href="Slast.html">Convertible</a>
+                        </div>
+                    </li>
+                     
+                    <li class="dropdown">
+                        <a href="Slast.html"><i class="fas fa-flag"></i> <span>Brands</span> <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="japan.html">Japanese</a>
+                            <a href="German.html">German</a>
+                            <a href="japan.html">Korean</a>
+                            <a href="German.html">American</a>
+                           
+                        </div>
+                    </li>
+
+                    <li><a href="P3.html"><i class="fas fa-cogs"></i> <span>Parts</span></a></li>
+
+                    <li><a href="OF1.html"><i class="fas fa-tag"></i> <span>Offers</span></a></li>
+
+                    <li><a href="BLO.html"><i class="fas fa-newspaper"></i> <span>Blog</span></a></li>
+
+                    <li><a href="faq1.html"><i class="fas fa-question-circle"></i> <span>FAQ</span></a></li>
+
+                    <li><a href="CT.html"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-icons">
+                <a href="garage_1.html" title="Garage"><i class="fas fa-warehouse"></i></a>
+                <!-- Updated User Icon - Now Clickable -->
+                <a href="#" class="user-icon" title="Account" id="userIcon">
+                    <i class="fas fa-user"></i>
+                </a>
+
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header with Video Background -->
+    <section class="page-header mobile-video-section">
+        <!-- Background Video -->
+        <video autoplay muted loop playsinline class="header-video mobile-video-media">
+            <source src="B1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Header Content - NOW CENTERED -->
+        <div class="page-header-content mobile-video-copy">
+           <h1>ABOUT LUXE MOTION</h1>
+        <p>Driving excellence since 2005 with a passion for premium vehicles and exceptional customer service.</p>
+        </div>
+    </section>
+
+    <!-- Company History -->
+    <section class="section">
+        <div class="section-title">
+            <h2>OUR HISTORY</h2>
+            <p>From humble beginnings to becoming a leader in the premium automotive industry</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>2005 - Foundation</h3>
+                    <p>LuxeMotion was founded by automotive enthusiasts with a vision to redefine luxury car buying experience.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>2008 - First Expansion</h3>
+                    <p>Opened our second dealership location and expanded our inventory to include European luxury brands.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>2012 - Online Platform</h3>
+                    <p>Launched our comprehensive online platform, allowing customers to browse and reserve vehicles digitally.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>2016 - National Recognition</h3>
+                    <p>Received the "Premium Dealer of the Year" award for outstanding customer service and sales excellence.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>2020 - Digital Transformation</h3>
+                    <p>Implemented VR showrooms and AI-powered vehicle matching to enhance the customer experience.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>2023 - Present Day</h3>
+                    <p>Now operating 12 locations nationwide with over 50,000 satisfied customers and counting.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="section">
+        <div class="section-title">
+            <h2>MISSION & VISION</h2>
+            <p>Our guiding principles that drive everything we do</p>
+        </div>
+        <div class="mission-vision">
+            <div class="mv-container">
+                <div class="mv-item mission">
+                    <div class="mv-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>OUR MISSION</h3>
+                    <p>To provide an unparalleled automotive experience by offering premium vehicles, transparent pricing, and exceptional customer service that exceeds expectations at every touchpoint.</p>
+                </div>
+                <div class="mv-item">
+                    <div class="mv-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>OUR VISION</h3>
+                    <p>To become the most trusted and innovative luxury automotive retailer globally, setting new standards for customer satisfaction and industry excellence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="section">
+        <div class="section-title">
+            <h2>WHY CHOOSE LUXE MOTION</h2>
+            <p>Discover what sets us apart from the competition</p>
+        </div>
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-car"></i>
+                </div>
+                <h3>Premium Selection</h3>
+                <p>Curated inventory of the finest luxury and performance vehicles from around the world.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3>Trusted Experience</h3>
+                <p>Over 18 years of industry expertise with 50,000+ satisfied customers nationwide.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-tag"></i>
+                </div>
+                <h3>Best Value</h3>
+                <p>Competitive pricing, flexible financing options, and guaranteed trade-in values.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3>Comprehensive Services</h3>
+                <p>From purchase to maintenance, we provide end-to-end automotive solutions.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-award"></i>
+                </div>
+                <h3>Award-Winning</h3>
+                <p>Multiple industry awards for customer service, sales excellence, and innovation.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>24/7 Support</h3>
+                <p>Round-the-clock customer support and roadside assistance for all our clients.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section with Video Background -->
+    <section class="stats mobile-video-section">
+        <!-- Background Video -->
+        <video autoplay muted loop playsinline class="stats-video mobile-video-media">
+            <source src="BB.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+        <div class="section-title mobile-video-copy">
+            <h2>BY THE NUMBERS</h2>
+            <p>Our achievements speak for themselves</p>
+        </div>
+        <div class="stats-container mobile-video-copy">
+            <div class="stat-item">
+                <div class="stat-number">18+</div>
+                <div class="stat-text">Years of Excellence</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50K+</div>
+                <div class="stat-text">Happy Customers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">12</div>
+                <div class="stat-text">Nationwide Locations</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">98%</div>
+                <div class="stat-text">Customer Satisfaction</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet Our Team -->
+    <section class="section">
+        <div class="section-title">
+            <h2>MEET OUR TEAM</h2>
+            <p>The passionate professionals behind our success</p>
+        </div>
+        <div class="team">
+            <div class="team-member">
+                <div class="member-img">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="James Wilson">
+                </div>
+                <div class="member-info">
+                    <h3>James Wilson</h3>
+                    <div class="member-role">CEO & Founder</div>
+                    <p>Visionary leader with 25+ years in the automotive industry.</p>
+                    <div class="member-social">
+                        <a href="https://www.linkedin.com" target="_blank">
+    <i class="fab fa-linkedin-in"></i>
+</a>
+
+<a href="https://twitter.com" target="_blank">
+    <i class="fab fa-twitter"></i>
+</a>
+
+<a href="https://www.instagram.com" target="_blank">
+    <i class="fab fa-instagram"></i>
+</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="team-member">
+                <div class="member-img">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" alt="Sarah Johnson">
+                </div>
+                <div class="member-info">
+                    <h3>Sarah Johnson</h3>
+                    <div class="member-role">Chief Operations Officer</div>
+                    <p>Operations expert focused on delivering exceptional customer experiences.</p>
+                    <div class="member-social">
+                       <a href="https://www.linkedin.com" target="_blank">
+    <i class="fab fa-linkedin-in"></i>
+</a>
+
+<a href="https://twitter.com" target="_blank">
+    <i class="fab fa-twitter"></i>
+</a>
+
+<a href="https://www.instagram.com" target="_blank">
+    <i class="fab fa-instagram"></i>
+</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="team-member">
+                <div class="member-img">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Michael Chen">
+                </div>
+                <div class="member-info">
+                    <h3>Michael Chen</h3>
+                    <div class="member-role">Head of Sales</div>
+                    <p>Sales strategist with a track record of exceeding targets and building relationships.</p>
+                    <div class="member-social">
+                        <a href="https://www.linkedin.com" target="_blank">
+    <i class="fab fa-linkedin-in"></i>
+</a>
+
+<a href="https://twitter.com" target="_blank">
+    <i class="fab fa-twitter"></i>
+</a>
+
+<a href="https://www.instagram.com" target="_blank">
+    <i class="fab fa-instagram"></i>
+</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="team-member">
+                <div class="member-img">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=761&q=80" alt="Emily Rodriguez">
+                </div>
+                <div class="member-info">
+                    <h3>Emily Rodriguez</h3>
+                    <div class="member-role">Customer Experience Director</div>
+                    <p>Dedicated to ensuring every client receives five-star service from start to finish.</p>
+                    <div class="member-social">
+                        <a href="https://www.linkedin.com" target="_blank">
+    <i class="fab fa-linkedin-in"></i>
+</a>
+
+<a href="https://twitter.com" target="_blank">
+    <i class="fab fa-twitter"></i>
+</a>
+
+<a href="https://www.instagram.com" target="_blank">
+    <i class="fab fa-instagram"></i>
+</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+         <div class="footer-content">
+
+    <div class="footer-column">
+        <h3>LUXE MOTION</h3>
+        <ul>
+            <li>
+                <a href="H2.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   Home
+                </a>
+            </li>
+            <li>
+                <a href="AU.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   About Us
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="footer-column">
+        <h3>SHOP</h3>
+        <ul>
+            <li>
+                <a href="Slast.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   Shop / Cars
+                </a>
+            </li>
+            <li>
+                <a href="P3.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   Car Parts & Accessories
+                </a>
+            </li>
+            <li>
+                <a href="OF1.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   Special Offers / Promotions
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="footer-column">
+        <h3>UPDATES</h3>
+        <ul>
+            <li>
+                <a href="BLO.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   Blog / News
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="footer-column">
+        <h3>SUPPORT</h3>
+        <ul>
+            <li>
+                <a href="faq1.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   Support / FAQ
+                </a>
+            </li>
+            <li>
+                <a href="CT.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   Contact
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="footer-column">
+        <h3>ACCOUNT</h3>
+        <ul>
+            <li>
+                <a href="garage_1.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   Garage
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+<a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+<a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+<a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+
+        </div>
+    </div>
+
+</div>
+
+        
+        <!-- Car Brand Icons Section -->
+        <div class="brand-icons-section">
+            <h3>OUR BRANDS</h3>
+            <div class="brand-icons">
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/toyota.jpg" alt="Toyota">
+                    </div>
+                    <div class="brand-icon-name">Toyota</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/honda.jpg" alt="Honda">
+                    </div>
+                    <div class="brand-icon-name">Honda</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/nissan.svg" alt="Nissan">
+                    </div>
+                    <div class="brand-icon-name">Nissan</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/hyundai.jpg" alt="Hyundai">
+                    </div>
+                    <div class="brand-icon-name">Hyundai</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/kia.jpg" alt="Kia">
+                    </div>
+                    <div class="brand-icon-name">Kia</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/ford.svg" alt="Ford">
+                    </div>
+                    <div class="brand-icon-name">Ford</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/chevrolet.jpg" alt="Chevrolet">
+                    </div>
+                    <div class="brand-icon-name">Chevrolet</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/bmw.svg" alt="BMW">
+                    </div>
+                    <div class="brand-icon-name">BMW</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/mercedes-benz.svg" alt="Mercedes-Benz">
+                    </div>
+                    <div class="brand-icon-name">Mercedes-Benz</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/audi.jpg" alt="Audi">
+                    </div>
+                    <div class="brand-icon-name">Audi</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 LuxeMotion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- NEW: Login/Signup Modal -->
+    <div class="modal-overlay" id="authModal">
+        <div class="auth-modal">
+            <div class="modal-header">
+                <div class="modal-logo">
+                    <img src="https://www.shutterstock.com/image-vector/lm-letter-vector-logo-260nw-633760886.jpg" alt="LuxeMotion Logo" class="modal-logo-img">
+                    <div class="modal-logo-text">Luxe<span>Motion</span></div>
+                </div>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Login Form (Default) -->
+                <div class="tab-content active" id="login-tab">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: var(--accent-text);">Login to Your Account</h3>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Email Address</label>
+                            <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                        </div>
+                        
+                        <div class="remember-forgot">
+                            <div class="remember-me">
+                                <input type="checkbox" id="rememberMe">
+                                <label for="rememberMe">Remember me</label>
+                            </div>
+                            <a href="#" class="forgot-password">Forgot Password?</a>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Login</button>
+                    </form>
+                    
+                    <div class="divider">or</div>
+                    
+                    <div class="social-login">
+                        <button class="social-btn">
+                            <i class="fab fa-google"></i>
+                            <span>Google</span>
+                        </button>
+                        <button class="social-btn">
+                            <i class="fab fa-facebook-f"></i>
+                            <span>Facebook</span>
+                        </button>
+                    </div>
+                    
+                    <div class="signup-link">
+                        Don't have an account? <a href="#" id="switchToSignup">Sign up</a>
+                    </div>
+                </div>
+                
+                <!-- Signup Form (Hidden by default) -->
+                <div class="tab-content" id="signup-tab">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: var(--accent-text);">Create New Account</h3>
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label for="signupName">Full Name</label>
+                            <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signupEmail">Email Address</label>
+                            <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" class="form-control" placeholder="Create a password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm your password" required>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Create Account</button>
+                    </form>
+                    
+                    <div class="divider">or</div>
+                    
+                    <div class="social-login">
+                        <button class="social-btn">
+                            <i class="fab fa-google"></i>
+                            <span>Google</span>
+                        </button>
+                        <button class="social-btn">
+                            <i class="fab fa-facebook-f"></i>
+                            <span>Facebook</span>
+                        </button>
+                    </div>
+                    
+                    <div class="signup-link">
+                        Already have an account? <a href="#" id="switchToLogin">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: Success Notification -->
+    <div class="success-notification" id="successNotification">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h3 class="success-title" id="successTitle">Success!</h3>
+        <p class="success-message" id="successMessage">Your account has been created successfully.</p>
+        <button class="success-button" id="closeSuccess">Continue</button>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or default to dark
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        
+        // Update icon based on current theme
+        if (currentTheme === 'light') {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            // Toggle between dark and light themes
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update icon
+            if (newTheme === 'light') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Simple animation for stats counter
+        document.addEventListener('DOMContentLoaded', function() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            
+            // Simple counter animation
+            statNumbers.forEach(stat => {
+                const target = parseInt(stat.textContent);
+                let current = 0;
+                const increment = target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    stat.textContent = Math.floor(current) + (stat.textContent.includes('+') ? '+' : '');
+                }, 50);
+            });
+        });
+
+        // NEW: Login/Signup Modal Functionality
+        const userIcon = document.getElementById('userIcon');
+        const authModal = document.getElementById('authModal');
+        const closeModal = document.getElementById('closeModal');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const switchToLogin = document.getElementById('switchToLogin');
+        const loginTab = document.getElementById('login-tab');
+        const signupTab = document.getElementById('signup-tab');
+        const footerLoginLink = document.getElementById('footerLoginLink');
+        
+        // Open modal when user icon is clicked
+        if (userIcon && authModal) {
+            userIcon.addEventListener('click', (e) => {
+                e.preventDefault();
+                authModal.classList.add('active');
+                showLoginForm();
+            });
+        }
+        
+        // Open modal when footer login link is clicked
+        if (footerLoginLink && authModal) {
+            footerLoginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                authModal.classList.add('active');
+                showLoginForm();
+            });
+        }
+        
+        // Close modal when close button is clicked
+        if (closeModal && authModal) {
+            closeModal.addEventListener('click', () => {
+                authModal.classList.remove('active');
+            });
+        }
+        
+        // Close modal when clicking outside the modal
+        if (authModal) {
+            authModal.addEventListener('click', (e) => {
+                if (e.target === authModal) {
+                    authModal.classList.remove('active');
+                }
+            });
+        }
+        
+        // Switch to signup form
+        if (switchToSignup) {
+            switchToSignup.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSignupForm();
+            });
+        }
+        
+        // Switch to login form
+        if (switchToLogin) {
+            switchToLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                showLoginForm();
+            });
+        }
+        
+        // Function to show login form
+        function showLoginForm() {
+            if (loginTab && signupTab) {
+                loginTab.classList.add('active');
+                signupTab.classList.remove('active');
+            }
+        }
+        
+        // Function to show signup form
+        function showSignupForm() {
+            if (loginTab && signupTab) {
+                loginTab.classList.remove('active');
+                signupTab.classList.add('active');
+            }
+        }
+        
+        // NEW: Success Notification Functionality
+        const successNotification = document.getElementById('successNotification');
+        const successTitle = document.getElementById('successTitle');
+        const successMessage = document.getElementById('successMessage');
+        const closeSuccess = document.getElementById('closeSuccess');
+        
+        // Function to show success notification
+        function showSuccess(title, message) {
+            successTitle.textContent = title;
+            successMessage.textContent = message;
+            successNotification.classList.add('active');
+        }
+        
+        // Close success notification
+        if (closeSuccess) {
+            closeSuccess.addEventListener('click', () => {
+                successNotification.classList.remove('active');
+            });
+        }
+        
+        // Form submission
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        
+        // Login form submission
+        if (loginForm && authModal) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                if (email && password) {
+                    // Show success notification
+                    showSuccess('Login Successful!', `Welcome back! You have successfully logged in to your account.`);
+                    
+                    // Close the modal
+                    authModal.classList.remove('active');
+                    
+                    // Reset form
+                    loginForm.reset();
+                } else {
+                    alert('Please fill in all fields');
+                }
+            });
+        }
+        
+        // Signup form submission
+        if (signupForm && authModal) {
+            signupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('signupName').value;
+                const email = document.getElementById('signupEmail').value;
+                const password = document.getElementById('signupPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                // Validation
+                if (!name || !email || !password || !confirmPassword) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    alert('Password must be at least 6 characters long');
+                    return;
+                }
+                
+                // Show success notification
+                showSuccess('Account Created!', `Thank you ${name}! Your account has been created successfully. You can now log in to your account.`);
+                
+                // Close the modal
+                authModal.classList.remove('active');
+                
+                // Reset form and switch to login
+                signupForm.reset();
+                showLoginForm();
+            });
+        }
+    </script>
+</body>
+</html>

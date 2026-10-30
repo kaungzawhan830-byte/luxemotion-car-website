@@ -1,0 +1,10 @@
+Toyota: https://global.toyota/pages/global_toyota/mobility/toyota-brand/emblem_001.jpg
+Honda: https://i.pinimg.com/originals/68/00/ce/6800ce74ba53f13a2d737e797bc5014c.jpg
+Nissan: https://upload.wikimedia.org/wikipedia/commons/2/23/Nissan_2020_logo.svg
+Hyundai: https://i.pinimg.com/564x/1a/28/41/1a2841bfe0e69df74bc17f74807eb9dc.jpg
+Kia: https://i.pinimg.com/736x/2e/fc/ec/2efcecb7601391e0dd8d988b1deb3f29.jpg
+Ford: https://upload.wikimedia.org/wikipedia/commons/a/a0/Ford_Motor_Company_Logo.svg
+Chevrolet: https://i.pinimg.com/736x/ae/8b/85/ae8b85fafff33026515fe34167409a74.jpg
+BMW: https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg
+Mercedes-Benz: https://upload.wikimedia.org/wikipedia/commons/3/32/Mercedes-Benz_Star_2022.svg
+Audi: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQM2Pl_WJTE8TVcYi2LNRyV30J8zG3Lx6r5tA&s

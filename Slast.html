@@ -1,0 +1,2261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Shop - LuxeMotion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --blood-red: #8B0000;
+            --dark-red: #660000;
+            --black: #121212;
+            --dark-gray: #1a1a1a;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --card-bg: #1a1a1a;
+            --header-bg: #121212;
+            --footer-bg: #1a1a1a;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f5f5f5;
+            --text-color: #121212;
+            --card-bg: #ffffff;
+            --header-bg: #ffffff;
+            --footer-bg: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .circular-logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            border: 2px solid var(--blood-red);
+        }
+
+        .logo h1 {
+            color: var(--text-color);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+
+        .logo span {
+            color: #FF0000;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            position: relative;
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 0;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--blood-red);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-text);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--card-bg);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-top: 3px solid var(--blood-red);
+        }
+
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--blood-red);
+            color: var(--white);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-icons a {
+            color: var(--text-color);
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .nav-icons a:hover {
+            color: var(--accent-text);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .theme-toggle:hover {
+            color: var(--accent-text);
+        }
+
+        /* Hero Section with Video */
+        .hero {
+            position: relative;
+            height: 80vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 6px rgba(0,0,0,0.7);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--blood-red);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: var(--dark-red);
+        }
+
+        /* Search and Filter Section */
+        .search-filter {
+            background-color: var(--card-bg);
+            padding: 30px 5%;
+            margin-bottom: 40px;
+        }
+
+        .search-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-bar {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 30px;
+            border: 2px solid var(--blood-red);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-bar i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-text);
+            font-size: 20px;
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: 2px solid var(--blood-red);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 16px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Car Categories */
+        .car-categories {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 60px 0 30px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 3px;
+            background-color: var(--blood-red);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 12px 25px;
+            background-color: var(--card-bg);
+            border: none;
+            border-radius: 30px;
+            color: var(--text-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-tab.active {
+            background-color: var(--blood-red);
+            color: var(--white);
+        }
+
+        .category-tab:hover:not(.active) {
+            background-color: var(--dark-red);
+            color: var(--white);
+        }
+
+        /* Car Grid */
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .car-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .car-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .car-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .car-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .car-card:hover .car-img img {
+            transform: scale(1.1);
+        }
+
+        .car-country {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .car-type {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--blood-red);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .car-content {
+            padding: 20px;
+        }
+
+        .car-brand {
+            color: var(--accent-text);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .car-name {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .car-price {
+            color: var(--accent-text);
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .car-features {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: var(--muted-text);
+        }
+
+        .car-feature {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .car-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .car-action {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .view-details {
+            background-color: transparent;
+            border: 2px solid var(--blood-red);
+            color: var(--accent-text);
+        }
+
+        .view-details:hover {
+            background-color: var(--blood-red);
+            color: var(--white);
+        }
+
+        .add-to-garage {
+            background-color: var(--blood-red);
+            border: 2px solid var(--blood-red);
+            color: var(--white);
+        }
+
+        .add-to-garage:hover {
+            background-color: var(--dark-red);
+            border-color: var(--dark-red);
+        }
+
+        /* Video Frame */
+        .video-frame {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .video-container {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
+
+        .video-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 30px;
+            color: var(--white);
+        }
+
+        .video-overlay h3 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .video-overlay p {
+            margin-bottom: 15px;
+            max-width: 600px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            padding: 60px 0 20px;
+            transition: background-color 0.3s;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 30px;
+        }
+
+        .footer-column h3 {
+            color: var(--accent-text);
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--blood-red);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--muted-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent-text);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--bg-color);
+            border-radius: 50%;
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--blood-red);
+            transform: translateY(-3px);
+        }
+
+        .brand-icons-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 20px;
+        }
+
+        .brand-icons-section h3 {
+            color: var(--accent-text);
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .brand-icons-section h3::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 2px;
+            background-color: var(--blood-red);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .brand-icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .brand-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80px;
+            transition: transform 0.3s;
+        }
+
+        .brand-icon:hover {
+            transform: translateY(-5px);
+        }
+
+        .brand-icon-img {
+            width: 60px;
+            height: 60px;
+            background-color: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .brand-icon-img img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .brand-icon-name {
+            font-size: 12px;
+            text-align: center;
+            color: var(--muted-text);
+            font-weight: 500;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--muted-text);
+            font-size: 14px;
+        }
+
+        /* Sound Button */
+        .sound-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 20px;
+        }
+
+        /* NEW: Login/Signup Modal Styles */
+        .user-icon {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .user-icon:hover {
+            color: var(--accent-text);
+            transform: scale(1.1);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .auth-modal {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .auth-modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            background-color: var(--blood-red);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-logo-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .modal-logo-text {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .modal-logo-text span {
+            color: #FFD700;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .close-modal:hover {
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 30px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--bg-color);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            color: var(--text-color);
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--blood-red);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remember-me input {
+            margin: 0;
+        }
+
+        .forgot-password {
+            color: var(--accent-text);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .forgot-password:hover {
+            color: var(--accent-hover);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--blood-red);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--dark-red);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+            color: var(--muted-text);
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 45%;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 45%;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .social-login {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: var(--bg-color);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            background-color: rgba(139, 0, 0, 0.1);
+            border-color: var(--blood-red);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--muted-text);
+        }
+
+        .signup-link a {
+            color: var(--accent-text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .signup-link a:hover {
+            color: var(--accent-hover);
+        }
+
+        /* FIXED: Tab Content Styling */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* NEW: Add to Garage Notification */
+        .garage-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--card-bg);
+            border-left: 5px solid #8B0000;
+            border-radius: 8px;
+            padding: 15px 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            max-width: 350px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+
+        .garage-notification.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .garage-notification-icon {
+            font-size: 24px;
+            color: #8B0000;
+        }
+
+        .garage-notification-content {
+            flex: 1;
+        }
+
+        .garage-notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .garage-notification-message {
+            font-size: 14px;
+            color: var(--muted-text);
+        }
+
+        /* NEW: Success Notification Styles */
+        .success-notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--card-bg);
+            border-left: 5px solid var(--blood-red);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .success-notification.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .success-icon {
+            font-size: 60px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .success-title {
+            font-size: 24px;
+            color: var(--accent-text);
+            margin-bottom: 15px;
+        }
+
+        .success-message {
+            color: var(--text-color);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .success-button {
+            background-color: var(--blood-red);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .success-button:hover {
+            background-color: var(--dark-red);
+        }
+
+        /* Responsive Fix */
+        @media (max-width: 768px) {
+            .modal-body {
+                max-height: 60vh;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .modal-body {
+                max-height: 50vh;
+                padding: 20px;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .footer-content {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+
+            .hero h2 {
+                font-size: 36px;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .brand-icons {
+                gap: 20px;
+            }
+            
+            .brand-icon {
+                width: 70px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .car-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul li a span {
+                display: none;
+            }
+            
+            nav ul li a i {
+                font-size: 20px;
+            }
+            
+            .brand-icons {
+                gap: 15px;
+            }
+            
+            .brand-icon {
+                width: 60px;
+            }
+            
+            .brand-icon-img {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .brand-icon-img img {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .brand-icon-name {
+                font-size: 10px;
+            }
+        }
+    </style>
+<link rel="stylesheet" href="theme.css?v=2">
+<link rel="stylesheet" href="mobile.css?v=3">
+<script src="mobile.js?v=3" defer></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="https://www.shutterstock.com/image-vector/lm-letter-vector-logo-260nw-633760886.jpg" alt="LuxeMotion Logo" class="circular-logo-img">
+                <h1>Luxe<span>Motion</span></h1>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="H2.html"><i class="fas fa-home"></i> <span>Home</span></a></li>
+                    <li><a href="AU.html"><i class="fas fa-info-circle"></i> <span>About</span></a></li>
+
+                    <li class="dropdown">
+                        <a href="Slast.html"><i class="fas fa-shopping-cart"></i> 
+                            <span>Shop</span> <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="Toyota.html">Toyota</a>
+                            <a href="Honda.html">Honda</a>
+                            <a href="bmw.html">BMW</a>
+                            <a href="Slast.html">Nissan</a>
+                            <a href="Slast.html">Hyundai</a>
+                            <a href="Slast.html">Kai</a>
+                        </div>
+                    </li>
+                     
+                     <li class="dropdown">
+                        <a href="Slast.html"><i class="fas fa-flag"></i> <span>Brands</span> <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="japan.html">Japanese</a>
+                            <a href="German.html">German</a>
+                            <a href="japan.html">Korean</a>
+                            <a href="German.html">American</a>
+                           
+                        </div>
+                    </li>
+
+                     <li><a href="P3.html"><i class="fas fa-cogs"></i> <span>Parts</span></a></li>
+
+                    <li><a href="OF1.html"><i class="fas fa-tag"></i> <span>Offers</span></a></li>
+
+                    <li><a href="BLO.html"><i class="fas fa-newspaper"></i> <span>Blog</span></a></li>
+
+                    <li><a href="faq1.html"><i class="fas fa-question-circle"></i> <span>FAQ</span></a></li>
+
+                    <li><a href="CT.html"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-icons">
+                <a href="garage_1.html" title="Garage"><i class="fas fa-warehouse"></i></a>
+                <!-- Updated User Icon - Now Clickable -->
+                <a href="#" class="user-icon" title="Account" id="userIcon">
+                    <i class="fas fa-user"></i>
+                </a>
+
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero mobile-video-section">
+        <!-- Background Video -->
+        <video id="bgVideo" autoplay muted loop playsinline class="hero-video mobile-video-media">
+            <source src="FF.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Sound Button -->
+        <button id="soundBtn" class="sound-btn mobile-video-sound">🔈</button>
+
+        <!-- Hero Content -->
+        <div class="hero-content mobile-video-copy">
+            <h2>Premium Performance</h2>
+            <p>Experience the thrill of driving with our premium collection of high-performance vehicles.</p>
+            <a href="new.html" class="cta-button">New Arrivals</a>
+        </div>
+    </section>
+
+    <section class="search-filter">
+        <div class="search-container">
+            <div class="search-bar">
+                <input id="carSearch" type="text" aria-label="Search cars by name, brand, or model" placeholder="Search for cars, brands, or models...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="filter-options">
+                <select class="filter-select" id="brandFilter">
+                    <option value="all">All Brands</option>
+                    <option value="toyota">Toyota</option>
+                    <option value="honda">Honda</option>
+                    <option value="nissan">Nissan</option>
+                    <option value="hyundai">Hyundai</option>
+                    <option value="kia">Kia</option>
+                    <option value="ford">Ford</option>
+                    <option value="chevrolet">Chevrolet</option>
+                    <option value="bmw">BMW</option>
+                    <option value="mercedes">Mercedes-Benz</option>
+                    <option value="audi">Audi</option>
+                </select>
+                <select class="filter-select" id="countryFilter">
+                    <option value="all">All Countries</option>
+                    <option value="japanese">Japanese</option>
+                    <option value="korean">Korean</option>
+                    <option value="american">American</option>
+                    <option value="german">German</option>
+                </select>
+                <select class="filter-select" id="priceFilter">
+                    <option value="all">Price Range</option>
+                    <option value="under30">Under $30,000</option>
+                    <option value="30-50">$30,000 - $50,000</option>
+                    <option value="50-80">$50,000 - $80,000</option>
+                    <option value="over80">Over $80,000</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <section class="car-categories">
+        <div class="section-title">
+            <h2>OUR CAR COLLECTION</h2>
+        </div>
+        
+        <div class="category-tabs">
+            <button class="category-tab active" data-type="all">Cars</button>
+            <button class="category-tab" data-type="sedan">Sedan</button>
+            <button class="category-tab" data-type="suv">SUV</button>
+            <button class="category-tab" data-type="truck">Truck</button>
+            <button class="category-tab" data-type="sports">Sports</button>
+            <button class="category-tab" data-type="coupe">Coupe</button>
+            <button class="category-tab" data-type="convertible">Convertible</button>
+        </div>
+
+        <div class="car-grid" id="carGrid">
+            <!-- All 18 cars will be loaded here by JavaScript -->
+        </div>
+    </section>
+
+    <section class="video-frame">
+        <div class="section-title">
+            <h2>EXPERIENCE LUXURY DRIVING</h2>
+        </div>
+        <div class="video-container mobile-video-section">
+            <video autoplay muted loop playsinline class="mobile-video-media">
+                <source src="M.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-overlay mobile-video-copy">
+                <h3>Premium Performance</h3>
+                <p>Experience the thrill of driving with our premium collection of high-performance vehicles.</p>
+                <a href="new.html" class="cta-button">New Arrivals</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>LUXE MOTION</h3>
+                <ul>
+                    <li><a href="H2.html" style="color:red;">Home</a></li>
+                    <li><a href="AU.html" style="color:red;">About Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>SHOP</h3>
+                <ul>
+                    <li><a href="Slast.html" style="color:red;">Shop / Cars</a></li>
+                    <li><a href="P3.html" style="color:red;">Car Parts & Accessories</a></li>
+                    <li><a href="OF1.html" style="color:red;">Special Offers / Promotions</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>UPDATES</h3>
+                <ul>
+                    <li><a href="BLO.html" style="color:red;">Blog / News</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>SUPPORT</h3>
+                <ul>
+                    <li><a href="faq1.html" style="color:red;">Support / FAQ</a></li>
+                    <li><a href="CT.html" style="color:red;">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>ACCOUNT</h3>
+                <ul>
+                    <li><a href="garage_1.html" style="color:red;">Garage</a></li>
+               
+                </ul>
+
+                <div class="social-icons">
+                   <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+<a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+<a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="brand-icons-section">
+            <h3>OUR BRANDS</h3>
+            <div class="brand-icons">
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/toyota.jpg" alt="Toyota">
+                    </div>
+                    <div class="brand-icon-name">Toyota</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/honda.jpg" alt="Honda">
+                    </div>
+                    <div class="brand-icon-name">Honda</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/nissan.svg" alt="Nissan">
+                    </div>
+                    <div class="brand-icon-name">Nissan</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/hyundai.jpg" alt="Hyundai">
+                    </div>
+                    <div class="brand-icon-name">Hyundai</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/kia.jpg" alt="Kia">
+                    </div>
+                    <div class="brand-icon-name">Kia</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/ford.svg" alt="Ford">
+                    </div>
+                    <div class="brand-icon-name">Ford</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/chevrolet.jpg" alt="Chevrolet">
+                    </div>
+                    <div class="brand-icon-name">Chevrolet</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/bmw.svg" alt="BMW">
+                    </div>
+                    <div class="brand-icon-name">BMW</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/mercedes-benz.svg" alt="Mercedes-Benz">
+                    </div>
+                    <div class="brand-icon-name">Mercedes-Benz</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/audi.jpg" alt="Audi">
+                    </div>
+                    <div class="brand-icon-name">Audi</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 LuxeMotion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- NEW: Login/Signup Modal -->
+    <div class="modal-overlay" id="authModal">
+        <div class="auth-modal">
+            <div class="modal-header">
+                <div class="modal-logo">
+                    <img src="https://www.shutterstock.com/image-vector/lm-letter-vector-logo-260nw-633760886.jpg" alt="LuxeMotion Logo" class="modal-logo-img">
+                    <div class="modal-logo-text">Luxe<span>Motion</span></div>
+                </div>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Login Form (Default) -->
+                <div class="tab-content active" id="login-tab">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: var(--accent-text);">Login to Your Account</h3>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Email Address</label>
+                            <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                        </div>
+                        
+                        <div class="remember-forgot">
+                            <div class="remember-me">
+                                <input type="checkbox" id="rememberMe">
+                                <label for="rememberMe">Remember me</label>
+                            </div>
+                            <a href="#" class="forgot-password">Forgot Password?</a>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Login</button>
+                    </form>
+                    
+                    <div class="divider">or</div>
+                    
+                    <div class="social-login">
+                        <button class="social-btn">
+                            <i class="fab fa-google"></i>
+                            <span>Google</span>
+                        </button>
+                        <button class="social-btn">
+                            <i class="fab fa-facebook-f"></i>
+                            <span>Facebook</span>
+                        </button>
+                    </div>
+                    
+                    <div class="signup-link">
+                        Don't have an account? <a href="H2.html#signup" id="switchToSignup">Sign up</a>
+                    </div>
+                </div>
+                
+                <!-- Signup Form (Hidden by default) -->
+                <div class="tab-content" id="signup-tab">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: var(--accent-text);">Create New Account</h3>
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label for="signupName">Full Name</label>
+                            <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signupEmail">Email Address</label>
+                            <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" class="form-control" placeholder="Create a password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm your password" required>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Create Account</button>
+                    </form>
+                    
+                    <div class="divider">or</div>
+                    
+                    <div class="social-login">
+                        <button class="social-btn">
+                            <i class="fab fa-google"></i>
+                            <span>Google</span>
+                        </button>
+                        <button class="social-btn">
+                            <i class="fab fa-facebook-f"></i>
+                            <span>Facebook</span>
+                        </button>
+                    </div>
+                    
+                    <div class="signup-link">
+                        Already have an account? <a href="#" id="switchToLogin">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: Success Notification -->
+    <div class="success-notification" id="successNotification">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h3 class="success-title" id="successTitle">Success!</h3>
+        <p class="success-message" id="successMessage">Your account has been created successfully.</p>
+        <button class="success-button" id="closeSuccess">Continue</button>
+    </div>
+
+    <!-- NEW: Add to Garage Notification -->
+    <div class="garage-notification" id="garageNotification">
+        <div class="garage-notification-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="garage-notification-content">
+            <div class="garage-notification-title" id="garageNotificationTitle">Added to Garage!</div>
+            <div class="garage-notification-message" id="garageNotificationMessage">Your car has been added to your garage successfully.</div>
+        </div>
+    </div>
+
+    <script>
+
+        // Car data - 18 cars with different types and countries
+        const cars = [
+            // Sedan Cars (6)
+            { 
+                id: 1, 
+                type: "sedan", 
+                brand: "toyota", 
+                name: "Camry XSE", 
+                price: 32000, 
+                country: "japanese", 
+                image: "https://tse3.mm.bing.net/th/id/OIP.tnTn05sez-T51T_mchYIzgAAAA?rs=1&pid=ImgDetMain&o=7&rm=3", 
+                hp: 203, 
+                mpg: 32 
+            },
+            { 
+                id: 2, 
+                type: "sedan", 
+                brand: "honda", 
+                name: "Accord Touring", 
+                price: 34500, 
+                country: "japanese", 
+                image: "https://th.bing.com/th/id/R.7a4d5769a5f07f05d2b4a94926e67e60?rik=XZM5TUFXIZVAaQ&riu=http%3a%2f%2fhondanewspecs.com%2fwp-content%2fuploads%2f2023%2f10%2fScreenshot-2023-10-16-082421.png&ehk=tKmNuf1pI0eAz5hO3H0rXytWKCUpAGr%2fhIbRBvM%2fJrA%3d&risl=&pid=ImgRaw&r=0", 
+                hp: 252, 
+                mpg: 30 
+            },
+            { 
+                id: 3, 
+                type: "sedan", 
+                brand: "hyundai", 
+                name: "Sonata Limited", 
+                price: 30000, 
+                country: "korean", 
+                image: "https://www.earnhardthyundai.com/blogs/4378/wp-content/uploads/2021/08/2021-sonata-sel-plus-portofino-gray-1_o-1536x864.jpg", 
+                hp: 191, 
+                mpg: 31 
+            },
+            { 
+                id: 4, 
+                type: "sedan", 
+                brand: "ford", 
+                name: "Fusion Titanium", 
+                price: 33200, 
+                country: "american", 
+                image: "https://www.perfectautocollection.com/imagetag/54/main/l/Used-2019-Ford-Fusion-Titanium-Sedan-4D-1575947453.jpg", 
+                hp: 245, 
+                mpg: 29 
+            },
+            { 
+                id: 5, 
+                type: "sedan", 
+                brand: "bmw", 
+                name: "3 Series 330i", 
+                price: 43000, 
+                country: "german", 
+                image: "https://www.groovecar.com/media/stock/images/stills/2022/bmw/3-series/330e-4dr-sedan/2022-bmw-3-series-330e-4dr-sedan-046-large.jpg", 
+                hp: 255, 
+                mpg: 28 
+            },
+            { 
+                id: 6, 
+                type: "sedan", 
+                brand: "mercedes", 
+                name: "C-Class C300", 
+                price: 44600, 
+                country: "german", 
+                image: "https://vehicle-images.dealerinspire.com/9abb-11001114/W1KAF4GB9PR125897/e97f1cb67b1c9f1e13216db0f36e036b.jpg", 
+                hp: 255, 
+                mpg: 27 
+            },
+            
+            // SUV Cars (3)
+            { 
+                id: 7, 
+                type: "suv", 
+                brand: "toyota", 
+                name: "RAV4 Adventure", 
+                price: 34500, 
+                country: "japanese", 
+                image: "https://th.bing.com/th/id/R.50909956990117bc3fd3f021337f9135?rik=M%2bLKJPoT56ErpA&pid=ImgRaw&r=0", 
+                hp: 203, 
+                mpg: 28 
+            },
+            { 
+                id: 8, 
+                type: "suv", 
+                brand: "ford", 
+                name: "Explorer Platinum", 
+                price: 52500, 
+                country: "american", 
+                image: "https://file.kelleybluebookimages.com/kbb/base/house/2020/2020-Ford-Explorer-FrontSide_FTEXPLI2001_640x480.jpg", 
+                hp: 365, 
+                mpg: 23 
+            },
+            { 
+                id: 9, 
+                type: "suv", 
+                brand: "audi", 
+                name: "Q7 Premium", 
+                price: 68200, 
+                country: "german", 
+                image: "https://wallpaperaccess.com/full/1702374.jpg", 
+                hp: 335, 
+                mpg: 22 
+            },
+            
+            // Truck Cars (3)
+            { 
+                id: 10, 
+                type: "truck", 
+                brand: "ford", 
+                name: "F-150 Raptor", 
+                price: 76775, 
+                country: "american", 
+                image: "https://th.bing.com/th/id/R.003ba0fc1b8cb2a7cdeaf04efebbea33?rik=ZIa33Kh%2fGynz0w&riu=http%3a%2f%2fwww.hdcarwallpapers.com%2fwalls%2fford_f_150_raptor_2017-wide.jpg&ehk=BK3kiPdG9EzzCRbm1NoWFVDPXNajOwCPvhor5nqz6Z8%3d&risl=&pid=ImgRaw&r=0", 
+                hp: 450, 
+                mpg: 18 
+            },
+            { 
+                id: 11, 
+                type: "truck", 
+                brand: "toyota", 
+                name: "Tacoma TRD Pro", 
+                price: 45600, 
+                country: "japanese", 
+                image: "https://bringatrailer.com/wp-content/uploads/2023/05/2021_toyota_tacoma_img_6944-1-47800.jpg", 
+                hp: 278, 
+                mpg: 20 
+            },
+            { 
+                id: 12, 
+                type: "truck", 
+                brand: "chevrolet", 
+                name: "Silverado High Country", 
+                price: 58900, 
+                country: "american", 
+                image: "https://st.automobilemag.com/uploads/sites/11/2018/08/2019-Chevrolet-Silverado-1500-High-Country-11.jpg", 
+                hp: 355, 
+                mpg: 19 
+            },
+            
+            // Sports Cars (3)
+            { 
+                id: 13, 
+                type: "sports", 
+                brand: "nissan", 
+                name: "GT-R Nismo", 
+                price: 210000, 
+                country: "japanese", 
+                image: "https://tse4.mm.bing.net/th/id/OIP.vcgt5yWbGSLr0ohRi-uUKAHaEK?w=768&h=432&rs=1&pid=ImgDetMain&o=7&rm=3", 
+                hp: 600, 
+                mpg: 16 
+            },
+            { 
+                id: 14, 
+                type: "sports", 
+                brand: "chevrolet", 
+                name: "Corvette Stingray", 
+                price: 68900, 
+                country: "american", 
+                image: "https://th.bing.com/th/id/R.e99e64b5d7ca870bf913058f209a55e3?rik=fnGPTGQOx9crQA&riu=http%3a%2f%2frichtigteuer.de%2fwp-content%2fuploads%2f2013%2f07%2fChevrolet-Corvette-C7-Stingray.jpg&ehk=oWgYfOLebwuwp6uG0JAnyWev22QFsc2JkDxyZXRDA4g%3d&risl=&pid=ImgRaw&r=0", 
+                hp: 495, 
+                mpg: 19 
+            },
+            { 
+                id: 15, 
+                type: "sports", 
+                brand: "bmw", 
+                name: "M5 Competition", 
+                price: 105900, 
+                country: "german", 
+                image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80", 
+                hp: 617, 
+                mpg: 20 
+            },
+            
+            // Coupe Cars (2)
+            { 
+                id: 16, 
+                type: "coupe", 
+                brand: "audi", 
+                name: "A5 Coupe", 
+                price: 48500, 
+                country: "german", 
+                image: "https://tse2.mm.bing.net/th/id/OIP.vOcaFR1YvYwiBJhD7GNMvAHaDt?w=800&h=400&rs=1&pid=ImgDetMain&o=7&rm=3", 
+                hp: 261, 
+                mpg: 29 
+            },
+            { 
+                id: 17, 
+                type: "coupe", 
+                brand: "kia", 
+                name: "Stinger GT", 
+                price: 52800, 
+                country: "korean", 
+                image: "https://tse4.mm.bing.net/th/id/OIP.nIGs1RgWaJIXcdjpKmK2CwHaEK?rs=1&pid=ImgDetMain&o=7&rm=3", 
+                hp: 365, 
+                mpg: 22 
+            },
+            
+            // Convertible Cars (1)
+            { 
+                id: 18, 
+                type: "convertible", 
+                brand: "mercedes", 
+                name: "E-Class Cabriolet", 
+                price: 75200, 
+                country: "german", 
+                image: "https://tse2.mm.bing.net/th/id/OIP.YfcmeigHD5-7k6LztpplDQHaE8?w=1752&h=1168&rs=1&pid=ImgDetMain&o=7&rm=3", 
+                hp: 362, 
+                mpg: 25 
+            }
+        ];
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or default to dark
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        
+        // Update icon based on current theme
+        if (currentTheme === 'light') {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            // Toggle between dark and light themes
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update icon
+            if (newTheme === 'light') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Video sound toggle functionality
+        const video = document.getElementById('bgVideo');
+        const btn = document.getElementById('soundBtn');
+
+        btn.addEventListener('click', () => {
+            if(video.muted) {
+                video.muted = false;
+                btn.textContent = "🔊"; // Sound on
+            } else {
+                video.muted = true;
+                btn.textContent = "🔈"; // Sound off
+            }
+        });
+
+        // NEW: Login/Signup Modal Functionality
+        const userIcon = document.getElementById('userIcon');
+        const authModal = document.getElementById('authModal');
+        const closeModal = document.getElementById('closeModal');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const switchToLogin = document.getElementById('switchToLogin');
+        const loginTab = document.getElementById('login-tab');
+        const signupTab = document.getElementById('signup-tab');
+        const footerLoginLink = document.getElementById('footerLoginLink');
+        
+        // Open modal when user icon is clicked
+        if (userIcon && authModal) {
+            userIcon.addEventListener('click', (e) => {
+                e.preventDefault();
+                authModal.classList.add('active');
+                showLoginForm();
+            });
+        }
+        
+        // Open modal when footer login link is clicked
+        if (footerLoginLink && authModal) {
+            footerLoginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                authModal.classList.add('active');
+                showLoginForm();
+            });
+        }
+        
+        // Close modal when close button is clicked
+        if (closeModal && authModal) {
+            closeModal.addEventListener('click', () => {
+                authModal.classList.remove('active');
+            });
+        }
+        
+        // Close modal when clicking outside the modal
+        if (authModal) {
+            authModal.addEventListener('click', (e) => {
+                if (e.target === authModal) {
+                    authModal.classList.remove('active');
+                }
+            });
+        }
+        
+        // Switch to signup form
+        if (switchToSignup) {
+            switchToSignup.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSignupForm();
+            });
+        }
+        
+        // Switch to login form
+        if (switchToLogin) {
+            switchToLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                showLoginForm();
+            });
+        }
+        
+        // Function to show login form
+        function showLoginForm() {
+            if (loginTab && signupTab) {
+                loginTab.classList.add('active');
+                signupTab.classList.remove('active');
+            }
+        }
+        
+        // Function to show signup form
+        function showSignupForm() {
+            if (loginTab && signupTab) {
+                loginTab.classList.remove('active');
+                signupTab.classList.add('active');
+            }
+        }
+        
+        // NEW: Success Notification Functionality
+        const successNotification = document.getElementById('successNotification');
+        const successTitle = document.getElementById('successTitle');
+        const successMessage = document.getElementById('successMessage');
+        const closeSuccess = document.getElementById('closeSuccess');
+        
+        // Function to show success notification
+        function showSuccess(title, message) {
+            successTitle.textContent = title;
+            successMessage.textContent = message;
+            successNotification.classList.add('active');
+        }
+        
+        // Close success notification
+        if (closeSuccess) {
+            closeSuccess.addEventListener('click', () => {
+                successNotification.classList.remove('active');
+            });
+        }
+        
+        // Form submission
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        
+        // Login form submission
+        if (loginForm && authModal) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                if (email && password) {
+                    // Show success notification
+                    showSuccess('Login Successful!', `Welcome back! You have successfully logged in to your account.`);
+                    
+                    // Close the modal
+                    authModal.classList.remove('active');
+                    
+                    // Reset form
+                    loginForm.reset();
+                } else {
+                    alert('Please fill in all fields');
+                }
+            });
+        }
+        
+        // Signup form submission
+        if (signupForm && authModal) {
+            signupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('signupName').value;
+                const email = document.getElementById('signupEmail').value;
+                const password = document.getElementById('signupPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                // Validation
+                if (!name || !email || !password || !confirmPassword) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    alert('Password must be at least 6 characters long');
+                    return;
+                }
+                
+                // Show success notification
+                showSuccess('Account Created!', `Thank you ${name}! Your account has been created successfully. You can now log in to your account.`);
+                
+                // Close the modal
+                authModal.classList.remove('active');
+                
+                // Reset form and switch to login
+                signupForm.reset();
+                showLoginForm();
+            });
+        }
+
+        // NEW: Function to show garage notification
+        function showGarageNotification(carName) {
+            const notification = document.getElementById('garageNotification');
+            const title = document.getElementById('garageNotificationTitle');
+            const message = document.getElementById('garageNotificationMessage');
+            
+            title.textContent = "Added to Garage!";
+            message.textContent = `${carName} has been added to your garage successfully.`;
+            
+            notification.classList.add('active');
+            
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('active');
+            }, 3000);
+        }
+        
+        // Function to display cars
+        function displayCars(filteredCars = cars) {
+            const carGrid = document.getElementById('carGrid');
+            carGrid.innerHTML = '';
+            
+            if (filteredCars.length === 0) {
+                const empty = document.createElement('p');
+                empty.setAttribute('role', 'status');
+                empty.style.gridColumn = '1 / -1';
+                empty.textContent = 'No cars found. Try another search or change your filters.';
+                carGrid.appendChild(empty);
+            }
+
+            filteredCars.forEach(car => {
+                const carCard = document.createElement('div');
+                carCard.className = 'car-card';
+                carCard.setAttribute('data-type', car.type);
+                carCard.setAttribute('data-brand', car.brand);
+                carCard.setAttribute('data-country', car.country);
+                carCard.setAttribute('data-price', car.price);
+                carCard.setAttribute('data-id', car.id);
+                
+                carCard.innerHTML = `
+                    <div class="car-img">
+                        <img src="${car.image}" alt="${car.name}">
+                        <div class="car-country">${car.country.charAt(0).toUpperCase() + car.country.slice(1)}</div>
+                        <div class="car-type">${car.type.charAt(0).toUpperCase() + car.type.slice(1)}</div>
+                    </div>
+                    <div class="car-content">
+                        <div class="car-brand">${getBrandName(car.brand)}</div>
+                        <h3 class="car-name">${car.name}</h3>
+                        <div class="car-price">$${car.price.toLocaleString()}</div>
+                        <div class="car-features">
+                            <div class="car-feature">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span>${car.hp} HP</span>
+                            </div>
+                            <div class="car-feature">
+                                <i class="fas fa-car"></i>
+                                <span>${car.type.charAt(0).toUpperCase() + car.type.slice(1)}</span>
+                            </div>
+                            <div class="car-feature">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>${car.mpg} MPG</span>
+                            </div>
+                        </div>
+                        <div class="car-actions">
+                            <div class="car-action view-details">View Details</div>
+                            <div class="car-action add-to-garage">Add to Garage</div>
+                        </div>
+                    </div>
+                `;
+                
+                carGrid.appendChild(carCard);
+            });
+            
+            // Add event listeners to action buttons
+            document.querySelectorAll('.view-details').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const carCard = button.closest('.car-card');
+                    const carId = carCard.getAttribute('data-id');
+                    window.location.href = `viewdetails.html?id=${carId}`;
+                });
+            });
+            
+            // Update the "Add to Garage" button functionality
+            document.querySelectorAll('.add-to-garage').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const carCard = button.closest('.car-card');
+                    const carName = carCard.querySelector('.car-name').textContent;
+                    
+                    // Show notification instead of alert
+                    showGarageNotification(carName);
+                    
+                    // Your existing garage functionality
+                    const carPrice = parseInt(carCard.querySelector('.car-price').textContent.replace('$', '').replace(',', ''));
+                    const carImage = carCard.querySelector('.car-img img').src;
+                    const carBrand = carCard.getAttribute('data-brand');
+                    const carId = parseInt(carCard.getAttribute('data-id'));
+                    
+                    // Get existing garage items or initialize empty array
+                    let garageItems = JSON.parse(localStorage.getItem('garageItems')) || [];
+                    
+                    // Check if item already exists in garage
+                    const existingItemIndex = garageItems.findIndex(item => item.id === carId);
+                    
+                    if (existingItemIndex !== -1) {
+                        // If item exists, increase quantity
+                        garageItems[existingItemIndex].quantity += 1;
+                    } else {
+                        // If item doesn't exist, add it
+                        garageItems.push({
+                            id: carId,
+                            name: carName,
+                            price: carPrice,
+                            image: carImage,
+                            brand: carBrand,
+                            quantity: 1
+                        });
+                    }
+                    
+                    // Save to localStorage
+                    localStorage.setItem('garageItems', JSON.stringify(garageItems));
+                });
+            });
+        }
+        
+        // Helper function to get brand name from brand ID
+        function getBrandName(brandId) {
+            const brands = {
+                toyota: "Toyota",
+                honda: "Honda",
+                nissan: "Nissan",
+                hyundai: "Hyundai",
+                kia: "Kia",
+                ford: "Ford",
+                chevrolet: "Chevrolet",
+                bmw: "BMW",
+                mercedes: "Mercedes-Benz",
+                audi: "Audi"
+            };
+            return brands[brandId] || brandId;
+        }
+        
+        // Category tabs functionality
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Get the car type from data attribute
+                const carType = tab.getAttribute('data-type');
+                
+                // Filter cars based on type
+                let filteredCars = cars;
+                if (carType !== 'all') {
+                    filteredCars = cars.filter(car => car.type === carType);
+                }
+                
+                // Apply additional filters if any
+                filteredCars = applyAdditionalFilters(filteredCars);
+                
+                // Display filtered cars
+                displayCars(filteredCars);
+            });
+        });
+        
+        // Function to apply additional filters (brand, country, price)
+        function applyAdditionalFilters(carsArray) {
+            const brandFilter = document.getElementById('brandFilter').value;
+            const countryFilter = document.getElementById('countryFilter').value;
+            const priceFilter = document.getElementById('priceFilter').value;
+            
+            let filtered = carsArray;
+            const normalizeSearch = value => value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+            const searchTerms = normalizeSearch(document.getElementById('carSearch').value).split(/\s+/).filter(Boolean);
+            if (searchTerms.length) {
+                filtered = filtered.filter(car => {
+                    const searchable = normalizeSearch(`${getBrandName(car.brand)} ${car.name} ${car.type} ${car.country}`);
+                    return searchTerms.every(term => searchable.includes(term));
+                });
+            }
+            
+            // Filter by brand
+            if (brandFilter !== 'all') {
+                filtered = filtered.filter(car => car.brand === brandFilter);
+            }
+            
+            // Filter by country
+            if (countryFilter !== 'all') {
+                filtered = filtered.filter(car => car.country === countryFilter);
+            }
+            
+            // Filter by price
+            if (priceFilter !== 'all') {
+                switch(priceFilter) {
+                    case 'under30':
+                        filtered = filtered.filter(car => car.price < 30000);
+                        break;
+                    case '30-50':
+                        filtered = filtered.filter(car => car.price >= 30000 && car.price <= 50000);
+                        break;
+                    case '50-80':
+                        filtered = filtered.filter(car => car.price >= 50000 && car.price <= 80000);
+                        break;
+                    case 'over80':
+                        filtered = filtered.filter(car => car.price > 80000);
+                        break;
+                }
+            }
+            
+            return filtered;
+        }
+        
+        document.getElementById('carSearch').addEventListener('input', updateFilters);
+
+        // Add event listeners to filter dropdowns
+        document.getElementById('brandFilter').addEventListener('change', updateFilters);
+        document.getElementById('countryFilter').addEventListener('change', updateFilters);
+        document.getElementById('priceFilter').addEventListener('change', updateFilters);
+        
+        // Function to update filters when dropdowns change
+        function updateFilters() {
+            const activeTab = document.querySelector('.category-tab.active');
+            const carType = activeTab.getAttribute('data-type');
+            
+            let filteredCars = cars;
+            if (carType !== 'all') {
+                filteredCars = cars.filter(car => car.type === carType);
+            }
+            
+            filteredCars = applyAdditionalFilters(filteredCars);
+            displayCars(filteredCars);
+        }
+        
+        // Add event listeners to dropdown menu items
+        document.querySelectorAll('.dropdown-content a[data-type]').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const carType = item.getAttribute('data-type');
+                
+                // Find and click the corresponding category tab
+                const tab = document.querySelector(`.category-tab[data-type="${carType}"]`);
+                if (tab) {
+                    tab.click();
+                }
+            });
+        });
+        
+        document.querySelectorAll('.dropdown-content a[data-country]').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const country = item.getAttribute('data-country');
+                
+                // Set the country filter dropdown
+                document.getElementById('countryFilter').value = country;
+                updateFilters();
+            });
+        });
+        
+        // Initialize the page with all cars
+        displayCars();
+    </script>
+</body>
+</html>

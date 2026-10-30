@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxeMotion - Contact & Locations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="style.css?v=2">
+    <style>
+        :root {
+            --blood-red: #8B0000;
+            --dark-red: #660000;
+            --black: #121212;
+            --dark-gray: #1a1a1a;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --card-bg: #1a1a1a;
+            --header-bg: #121212;
+            --footer-bg: #1a1a1a;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f5f5f5;
+            --text-color: #121212;
+            --card-bg: #ffffff;
+            --header-bg: #ffffff;
+            --footer-bg: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Map and Locations Section */
+        .locations-section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 42px;
+            display: inline-block;
+            padding-bottom: 15px;
+            color: var(--accent-text);
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 3px;
+            background-color: var(--blood-red);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .locations-container {
+            display: flex;
+            gap: 30px;
+            height: 600px;
+        }
+
+        .map-container {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        .locations-info {
+            flex: 1;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            overflow-y: auto;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .locations-info h3 {
+            color: var(--accent-text);
+            font-size: 28px;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .locations-info h3::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: var(--blood-red);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .location-item {
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--blood-red);
+            transition: transform 0.3s;
+        }
+
+        .location-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .location-item h4 {
+            color: var(--accent-text);
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .location-detail {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            color: var(--muted-text);
+        }
+
+        .location-detail i {
+            color: var(--accent-text);
+            margin-right: 10px;
+            min-width: 20px;
+            margin-top: 2px;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            margin-top: 60px;
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 40px;
+        }
+
+        .contact-info {
+            flex: 1;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .contact-info h2 {
+            color: var(--accent-text);
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .contact-info p {
+            color: var(--muted-text);
+            font-size: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .contact-details {
+            margin-top: 40px;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: var(--muted-text);
+        }
+
+        .contact-detail i {
+            color: var(--accent-text);
+            margin-right: 15px;
+            font-size: 24px;
+            min-width: 30px;
+        }
+
+        .contact-detail div {
+            font-size: 16px;
+        }
+
+        .contact-detail strong {
+            color: var(--white);
+            font-size: 18px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .contact-form {
+            flex: 1;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .contact-form h3 {
+            color: var(--accent-text);
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--muted-text);
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--bg-color);
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: var(--text-color);
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--blood-red);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background-color: var(--blood-red);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--dark-red);
+        }
+
+
+
+        /* Custom red pin style for Leaflet */
+        .red-pin {
+            background: #e74c3c;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .red-pin::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid #e74c3c;
+        }
+
+        /* Success Notification - Centered with Theme Colors */
+        .notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background-color: var(--blood-red);
+            color: var(--white);
+            padding: 25px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.4);
+            z-index: 10000;
+            opacity: 0;
+            transition: all 0.4s ease;
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            min-width: 300px;
+            border: 2px solid var(--dark-red);
+        }
+
+        .notification.show {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .notification.hide {
+            transform: translate(-50%, -50%) scale(0.8);
+            opacity: 0;
+        }
+
+        .notification i {
+            margin-right: 12px;
+            font-size: 24px;
+        }
+
+
+    </style>
+<link rel="stylesheet" href="theme.css?v=2">
+<link rel="stylesheet" href="mobile.css?v=3">
+<script src="mobile.js?v=3" defer></script>
+</head>
+<body>
+    <!-- Success Notification -->
+    <div id="successNotification" class="notification">
+        <i class="fas fa-check-circle"></i>
+        Message not sent — demo form
+    </div>
+
+    <header>
+         <div class="header-container">
+            <div class="logo">
+                <img src="https://www.shutterstock.com/image-vector/lm-letter-vector-logo-260nw-633760886.jpg" alt="LuxeMotion Logo" class="circular-logo-img">
+                <h1>Luxe<span>Motion</span></h1>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="H2.html"><i class="fas fa-home"></i> <span>Home</span></a></li>
+                    <li><a href="AU.html"><i class="fas fa-info-circle"></i> <span>About</span></a></li>
+
+                    <li class="dropdown">
+                        <a href="Slast.html"><i class="fas fa-shopping-cart"></i> 
+                            <span>Shop</span> <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="Toyota.html">Toyota</a>
+                            <a href="Honda.html">Honda</a>
+                            <a href="bmw.html">BMW</a>
+                            <a href="Slast.html">Nissan</a>
+                            <a href="Slast.html">Hyundai</a>
+                            <a href="Slast.html">Kai</a>
+                        </div>
+                    </li>
+                     
+                     <li class="dropdown">
+                        <a href="Slast.html"><i class="fas fa-flag"></i> <span>Brands</span> <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="japan.html">Japanese</a>
+                            <a href="German.html">German</a>
+                            <a href="japan.html">Korean</a>
+                            <a href="German.html">American</a>
+                           
+                        </div>
+                    </li>
+
+                     <li><a href="P3.html"><i class="fas fa-cogs"></i> <span>Parts</span></a></li>
+
+                    <li><a href="OF1.html"><i class="fas fa-tag"></i> <span>Offers</span></a></li>
+
+                    <li><a href="BLO.html"><i class="fas fa-newspaper"></i> <span>Blog</span></a></li>
+
+                    <li><a href="faq1.html"><i class="fas fa-question-circle"></i> <span>FAQ</span></a></li>
+
+                    <li><a href="CT.html"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-icons">
+                <a href="garage_1.html" title="Garage"><i class="fas fa-warehouse"></i></a>
+                <!-- Updated User Icon - Now Clickable -->
+                <a href="#" class="user-icon" title="Account" id="userIcon">
+                    <i class="fas fa-user"></i>
+                </a>
+
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Map and Locations Section -->
+        <section class="locations-section">
+            
+            <div class="locations-container">
+                <div class="map-container">
+                    <div id="map"></div>
+                </div>
+                <div class="locations-info">
+                    <h3>Our Premium Showrooms</h3>
+                    <div class="location-item">
+                        <h4>Yangon</h4>
+                        <div class="location-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Kantharyar Road, Bahan Township</span>
+                        </div>
+                        <div class="location-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>+95 9 123 456 789</span>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <h4>Mandalay</h4>
+                        <div class="location-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>78th Street × 35th Street</span>
+                        </div>
+                        <div class="location-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>+95 9 234 567 890</span>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <h4>Nay Pyi Taw</h4>
+                        <div class="location-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Yaza Htarni Road</span>
+                        </div>
+                        <div class="location-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>+95 9 345 678 901</span>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <h4>Taunggyi</h4>
+                        <div class="location-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Ayetharyar Road, Shan State</span>
+                        </div>
+                        <div class="location-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>+95 9 456 789 012</span>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <h4>Mawlamyine</h4>
+                        <div class="location-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Strand Road, Mon State</span>
+                        </div>
+                        <div class="location-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>+95 9 567 890 123</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <div class="section-title">
+                <h2>Let's Start A Conversation</h2>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                   
+                    <p>We will get back to you as soon as possible</p>
+                    <div class="contact-details">
+                        <div class="contact-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Head Office</strong>
+                                Kantharyar Road, Bahan Township, Yangon
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Phone</strong>
+                                +95 9 123 456 789
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>Email</strong>
+                                luxemotion@premiumcars-mm.com
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Contact Us</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Preferred Showroom</label>
+                            <select id="location" name="location">
+                                <option value="">Select a location</option>
+                                <option value="yangon">Yangon - Kantharyar Road</option>
+                                <option value="mandalay">Mandalay - 78th × 35th Street</option>
+                                <option value="naypyitaw">Nay Pyi Taw - Yaza Htarni Road</option>
+                                <option value="taunggyi">Taunggyi - Ayetharyar Road</option>
+                                <option value="mawlamyine">Mawlamyine - Strand Road</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">SUBMIT</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>LUXE MOTION</h3>
+                <ul>
+                    <li><a href="H2.html" style="color:red;">Home</a></li>
+                    <li><a href="AU.html" style="color:red;">About Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>SHOP</h3>
+                <ul>
+                    <li><a href="Slast.html" style="color:red;">Shop / Cars</a></li>
+                    <li><a href="P3.html" style="color:red;">Car Parts & Accessories</a></li>
+                    <li><a href="OF1.html" style="color:red;">Special Offers / Promotions</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>UPDATES</h3>
+                <ul>
+                    <li><a href="BLO.html" style="color:red;">Blog / News</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>SUPPORT</h3>
+                <ul>
+                    <li><a href="faq1.html" style="color:red;">Support / FAQ</a></li>
+                    <li><a href="CT.html" style="color:red;">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>ACCOUNT</h3>
+                <ul>
+                    <li><a href="garage_1.html" style="color:red;">Garage</a></li>
+               
+                </ul>
+
+                <div class="social-icons">
+                   <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+<a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+<a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <!-- NEW: Car Brand Icons Section -->
+        <div class="brand-icons-section">
+            <h3>OUR BRANDS</h3>
+            <div class="brand-icons">
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/toyota.jpg" alt="Toyota">
+                    </div>
+                    <div class="brand-icon-name">Toyota</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/honda.jpg" alt="Honda">
+                    </div>
+                    <div class="brand-icon-name">Honda</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/nissan.svg" alt="Nissan">
+                    </div>
+                    <div class="brand-icon-name">Nissan</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/hyundai.jpg" alt="Hyundai">
+                    </div>
+                    <div class="brand-icon-name">Hyundai</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/kia.jpg" alt="Kia">
+                    </div>
+                    <div class="brand-icon-name">Kia</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/ford.svg" alt="Ford">
+                    </div>
+                    <div class="brand-icon-name">Ford</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/chevrolet.jpg" alt="Chevrolet">
+                    </div>
+                    <div class="brand-icon-name">Chevrolet</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/bmw.svg" alt="BMW">
+                    </div>
+                    <div class="brand-icon-name">BMW</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/mercedes-benz.svg" alt="Mercedes-Benz">
+                    </div>
+                    <div class="brand-icon-name">Mercedes-Benz</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/audi.jpg" alt="Audi">
+                    </div>
+                    <div class="brand-icon-name">Audi</div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="copyright">
+            <p>&copy; 2025 LuxeMotion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or default to dark
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        
+        // Update icon based on current theme
+        if (currentTheme === 'light') {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            // Toggle between dark and light themes
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update icon
+            if (newTheme === 'light') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Initialize map
+        const map = L.map('map').setView([19.7633, 96.0785], 6);
+
+        // Add tile layer (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Custom red pin icon
+        const redPinIcon = L.divIcon({
+            className: 'red-pin',
+            iconSize: [25, 25],
+            iconAnchor: [12, 25],
+            popupAnchor: [0, -25]
+        });
+
+        // Showroom locations
+        const locations = [
+            {
+                name: "Yangon Showroom",
+                address: "Kantharyar Road, Bahan Township",
+                phone: "+95 9 123 456 789",
+                lat: 16.8062,
+                lng: 96.1353
+            },
+            {
+                name: "Mandalay Showroom",
+                address: "78th Street × 35th Street",
+                phone: "+95 9 234 567 890",
+                lat: 21.9588,
+                lng: 96.0891
+            },
+            {
+                name: "Nay Pyi Taw Showroom",
+                address: "Yaza Htarni Road",
+                phone: "+95 9 345 678 901",
+                lat: 19.7633,
+                lng: 96.0785
+            },
+            {
+                name: "Taunggyi Showroom",
+                address: "Ayetharyar Road, Shan State",
+                phone: "+95 9 456 789 012",
+                lat: 20.7892,
+                lng: 97.0347
+            },
+            {
+                name: "Mawlamyine Showroom",
+                address: "Strand Road, Mon State",
+                phone: "+95 9 567 890 123",
+                lat: 16.4802,
+                lng: 97.6210
+            }
+        ];
+
+        // Add markers to map
+        locations.forEach(location => {
+            const marker = L.marker([location.lat, location.lng], { icon: redPinIcon })
+                .addTo(map)
+                .bindPopup(`
+                    <div style="padding: 10px; min-width: 200px; font-family: 'Segoe UI', sans-serif;">
+                        <h3 style="color: #8B0000; margin: 0 0 8px 0; border-bottom: 2px solid #8B0000; padding-bottom: 5px; font-size: 16px;">${location.name}</h3>
+                        <p style="margin: 6px 0; color: #333; font-size: 14px;"><strong>📍 Address:</strong> ${location.address}</p>
+                        <p style="margin: 6px 0; color: #333; font-size: 14px;"><strong>📞 Phone:</strong> ${location.phone}</p>
+                    </div>
+                `);
+        });
+
+        // Adjust map view to show all markers
+        const group = new L.featureGroup(locations.map(loc => L.marker([loc.lat, loc.lng])));
+        map.fitBounds(group.getBounds().pad(0.1));
+
+        // Form handling with success notification
+        const form = document.getElementById('contactForm');
+        const notification = document.getElementById('successNotification');
+        const requestedPart = new URLSearchParams(location.search).get('part');
+        if (requestedPart) document.getElementById('message').value = 'Please confirm availability, fitment and price for: ' + requestedPart;
+
+        function showNotification() {
+            notification.classList.remove('hide');
+            notification.classList.add('show');
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                notification.classList.add('hide');
+            }, 3000);
+        }
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = {
+                name: form.name.value,
+                email: form.email.value,
+                phone: form.phone.value,
+                location: form.location.value,
+                message: form.message.value
+            };
+
+            // No message-delivery service is connected to this static site.
+            
+            // Show success notification
+            showNotification();
+
+            // Reset form
+            // Preserve the enquiry because no message was sent.
+        });
+    </script>
+</body>
+</html>

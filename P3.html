@@ -1,0 +1,1329 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxeMotion Parts &amp; Accessories</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css?v=2">
+  <style>
+    :root {
+      --blood-red: #8B0000;
+      --dark-red: #660000;
+      --black: #121212;
+      --dark-gray: #1a1a1a;
+      --light-gray: #f5f5f5;
+      --white: #ffffff;
+      --bg-color: #121212;
+      --text-color: #ffffff;
+      --card-bg: #1a1a1a;
+      --header-bg: #121212;
+      --footer-bg: #1a1a1a;
+    }
+
+    [data-theme="light"] {
+      --bg-color: #f5f5f5;
+      --text-color: #121212;
+      --card-bg: #ffffff;
+      --header-bg: #ffffff;
+      --footer-bg: #e0e0e0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+
+
+    /* Parts Page Specific Styles */
+    .hero-gradient {
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .category-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      background-color: var(--card-bg);
+    }
+
+    .category-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .category-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .category-card:hover::before {
+      left: 100%;
+    }
+
+    .category-dropdown-btn {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .category-dropdown-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .category-dropdown-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+
+    .category-dropdown-content.active {
+      max-height: 800px;
+      padding: 1.5rem 0;
+    }
+
+    .category-dropdown-arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .category-dropdown-arrow.rotated {
+      transform: rotate(180deg);
+    }
+
+    .subcategory-item {
+      padding: 0.875rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-left: 3px solid transparent;
+      color: var(--text-color);
+    }
+
+    .subcategory-item:hover {
+      background-color: rgba(139, 0, 0, 0.1);
+      border-left-color: var(--blood-red);
+      padding-left: 2rem;
+    }
+
+    .filter-dropdown {
+      position: relative;
+    }
+
+    .filter-options {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--card-bg);
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 100;
+      margin-top: 0.5rem;
+      max-height: 350px;
+      overflow-y: auto;
+    }
+
+    .filter-options.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .filter-option {
+      padding: 0.875rem 1.25rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-color);
+    }
+
+    .filter-option:last-child {
+      border-bottom: none;
+    }
+
+    .filter-option:hover {
+      background-color: rgba(139, 0, 0, 0.1);
+      padding-left: 1.5rem;
+    }
+
+    .filter-option.selected {
+      background-color: rgba(139, 0, 0, 0.2);
+      color: var(--accent-text);
+      font-weight: 600;
+    }
+
+    .product-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+      background-color: var(--card-bg);
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.375rem 0.875rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .search-input {
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(139, 0, 0, 0.2);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .loading {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+  
+
+
+
+.image-wrapper:hover {
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+#close-btn:hover {
+  opacity: 1; /* Makes the X brighter on hover */
+}
+
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  
+ <link rel="stylesheet" href="theme.css?v=2">
+<link rel="stylesheet" href="mobile.css?v=3">
+<script src="mobile.js?v=3" defer></script>
+</head>
+ <body style="margin: 0; padding: 0;">
+    <header>
+         <div class="header-container">
+            <div class="logo">
+                <img src="https://www.shutterstock.com/image-vector/lm-letter-vector-logo-260nw-633760886.jpg" alt="LuxeMotion Logo" class="circular-logo-img">
+                <h1>Luxe<span>Motion</span></h1>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="H2.html"><i class="fas fa-home"></i> <span>Home</span></a></li>
+                    <li><a href="AU.html"><i class="fas fa-info-circle"></i> <span>About</span></a></li>
+
+                    <li class="dropdown">
+                        <a href="Slast.html"><i class="fas fa-shopping-cart"></i> 
+                            <span>Shop</span> <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="Toyota.html">Toyota</a>
+                            <a href="Honda.html">Honda</a>
+                            <a href="bmw.html">BMW</a>
+                            <a href="Slast.html">Nissan</a>
+                            <a href="Slast.html">Hyundai</a>
+                            <a href="Slast.html">Kai</a>
+                        </div>
+                    </li>
+                     
+                     <li class="dropdown">
+                        <a href="Slast.html"><i class="fas fa-flag"></i> <span>Brands</span> <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="japan.html">Japanese</a>
+                            <a href="German.html">German</a>
+                            <a href="japan.html">Korean</a>
+                            <a href="German.html">American</a>
+                           
+                        </div>
+                    </li>
+
+                     <li><a href="P3.html"><i class="fas fa-cogs"></i> <span>Parts</span></a></li>
+
+                    <li><a href="OF1.html"><i class="fas fa-tag"></i> <span>Offers</span></a></li>
+
+                    <li><a href="BLO.html"><i class="fas fa-newspaper"></i> <span>Blog</span></a></li>
+
+                    <li><a href="faq1.html"><i class="fas fa-question-circle"></i> <span>FAQ</span></a></li>
+
+                    <li><a href="CT.html"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-icons">
+                <a href="garage_1.html" title="Garage"><i class="fas fa-warehouse"></i></a>
+                <!-- Updated User Icon - Now Clickable -->
+                <a href="#" class="user-icon" title="Account" id="userIcon">
+                    <i class="fas fa-user"></i>
+                </a>
+
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+  <div style="width: 100%; min-height: 100%;">
+
+<!-- Hero Section -->
+<section 
+    style="
+        padding: 4rem 1.5rem; 
+        text-align: center; 
+        position: relative; 
+        overflow: hidden;
+        background: none !important; /* 🚫 Removes original background */
+    "
+ class="mobile-video-section">
+
+    <!-- 🔥 BACKGROUND VIDEO -->
+    <video autoplay muted loop playsinline
+           style="
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transform: translate(-50%, -50%);
+                z-index: 0;
+           " class="mobile-video-media">
+        <source src="qa.mp4" type="video/mp4">
+    </video>
+
+    <!-- Optional dark overlay -->
+    <div style="
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 1;
+    " class="theme-inverse mobile-video-shade"></div>
+
+    <!-- HERO CONTENT -->
+    <div style="max-width: 1280px; margin: 0 auto; position: relative; z-index: 10;" class="mobile-video-copy">
+
+        <div style="
+            display: inline-block;
+            background-color: var(--blood-red);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+        " class="theme-inverse">
+            🔧 PARTS & ACCESSORIES
+        </div>
+
+        <h1 id="hero-title" 
+            style="font-size: 3.5rem; font-weight: 800; color: var(--text-color); margin-bottom: 1.5rem; line-height: 1.1; text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
+            Premium Auto Parts & Accessories
+        </h1>
+
+        <p id="hero-subtitle" style="
+            font-size: 1.375rem; 
+            color: var(--muted-text); 
+            max-width: 48rem; 
+            margin: 0 auto 2.5rem;
+        ">
+            Discover high-quality parts and accessories for your luxury vehicle
+        </p>
+
+        <!-- Search Bar -->
+        <div style="max-width: 700px; margin: 0 auto;">
+            <div style="position: relative;">
+                <input 
+                    type="text" 
+                    id="search-input"
+                    placeholder="Search by part name, number, or description..." 
+                    class="search-input theme-surface"
+                    style="
+                        width: 100%;
+                        padding: 1.25rem 4rem 1.25rem 1.5rem;
+                        border: none;
+                        border-radius: 0.75rem;
+                        font-size: 1.125rem;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+                        outline: none;
+                        background-color: var(--card-bg);
+                        color: var(--text-color);
+                    "
+                >
+
+                <button 
+                    style="
+                        position: absolute; 
+                        right: 0.75rem; 
+                        top: 50%; 
+                        transform: translateY(-50%); 
+                        background-color: var(--blood-red); 
+                        color: white; 
+                        padding: 0.875rem 1.75rem; 
+                        border: none; 
+                        border-radius: 0.5rem; 
+                        font-weight: 700; 
+                        cursor: pointer; 
+                        transition: background-color 0.2s;
+                    " class="theme-inverse">
+                    Search
+                </button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+</div>
+
+   </section><!-- Categories by Car Type Section -->
+   <section id="categories" style="padding: 5rem 1.5rem; background-color: var(--bg-color);" class="theme-surface">
+    <div style="max-width: 1280px; margin: 0 auto;">
+     <div style="text-align: center; margin-bottom: 4rem;">
+      <h2 id="categories-title" style="font-size: 2.75rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">Browse by Category</h2>
+      <p style="font-size: 1.125rem; color: var(--muted-text);">Expand each category to explore specific parts and accessories</p>
+     </div>
+     <div style="display: grid; gap: 1.5rem; max-width: 900px; margin: 0 auto;"><!-- Engine Parts -->
+      <div class="category-card" style="border-radius: 1rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border: 2px solid rgba(255, 255, 255, 0.1);">
+       <div class="category-dropdown-btn theme-inverse" data-dropdown="engine" style="padding: 2rem; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, var(--blood-red) 0%, var(--dark-red) 100%); border-radius: 0.875rem;">
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+         <div style="width: 70px; height: 70px; background-color: rgba(255, 255, 255, 0.2); border-radius: 1rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
+          ⚙️
+         </div>
+         <div>
+          <h3 style="font-size: 1.75rem; font-weight: 700; color: var(--text-color); margin-bottom: 0.25rem;">Engine Parts</h3>
+          <p style="color: rgba(255, 255, 255, 0.9); font-size: 0.975rem;">Pistons, Filters, Belts &amp; More</p>
+         </div>
+        </div>
+        <svg class="category-dropdown-arrow" width="32" height="32" viewbox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+       </div>
+       <div class="category-dropdown-content" data-content="engine" style="background-color: rgba(139, 0, 0, 0.05);">
+        <div class="subcategory-item" style="font-weight: 500;">
+         🔩 <a href="CT.html?part=Pistons+%26+Cylinders#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Pistons &amp; Cylinders</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🛢️ <a href="CT.html?part=Oil+Filters+%26+Air+Filters#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Oil Filters &amp; Air Filters</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         ⚡ <a href="CT.html?part=Spark+Plugs+%26+Ignition+Coils#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Spark Plugs &amp; Ignition Coils</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🔗 <a href="CT.html?part=Timing+Belts+%26+Chains#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Timing Belts &amp; Chains</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         💨 <a href="CT.html?part=Gaskets+%26+Seals#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Gaskets &amp; Seals</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🌡️ <a href="CT.html?part=Thermostats+%26+Sensors#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Thermostats &amp; Sensors</a>
+        </div>
+       </div>
+      </div><!-- Brakes & Suspension -->
+      <div class="category-card" style="border-radius: 1rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border: 2px solid rgba(255, 255, 255, 0.1);">
+       <div class="category-dropdown-btn theme-inverse" data-dropdown="brakes" style="padding: 2rem; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, var(--blood-red) 0%, var(--dark-red) 100%); border-radius: 0.875rem;">
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+         <div style="width: 70px; height: 70px; background-color: rgba(255, 255, 255, 0.2); border-radius: 1rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
+          🛑
+         </div>
+         <div>
+          <h3 style="font-size: 1.75rem; font-weight: 700; color: var(--text-color); margin-bottom: 0.25rem;">Brakes &amp; Suspension</h3>
+          <p style="color: rgba(255, 255, 255, 0.9); font-size: 0.975rem;">Pads, Rotors, Shocks &amp; Springs</p>
+         </div>
+        </div>
+        <svg class="category-dropdown-arrow" width="32" height="32" viewbox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+       </div>
+       <div class="category-dropdown-content" data-content="brakes" style="background-color: rgba(139, 0, 0, 0.05);">
+        <div class="subcategory-item" style="font-weight: 500;">
+         🔴 <a href="CT.html?part=Brake+Pads+%26+Rotors#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Brake Pads &amp; Rotors</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🚗 <a href="CT.html?part=Brake+Calipers+%26+Lines#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Brake Calipers &amp; Lines</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         💧 <a href="CT.html?part=Brake+Fluid+%26+Master+Cylinders#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Brake Fluid &amp; Master Cylinders</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         ⬇️ <a href="CT.html?part=Shock+Absorbers+%26+Struts#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Shock Absorbers &amp; Struts</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🌊 <a href="CT.html?part=Coil+Springs+%26+Air+Springs#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Coil Springs &amp; Air Springs</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🔧 <a href="CT.html?part=Control+Arms+%26+Bushings#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Control Arms &amp; Bushings</a>
+        </div>
+       </div>
+      </div><!-- Exterior Accessories -->
+      <div class="category-card" style="border-radius: 1rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border: 2px solid rgba(255, 255, 255, 0.1);">
+       <div class="category-dropdown-btn theme-inverse" data-dropdown="exterior" style="padding: 2rem; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, var(--blood-red) 0%, var(--dark-red) 100%); border-radius: 0.875rem;">
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+         <div style="width: 70px; height: 70px; background-color: rgba(255, 255, 255, 0.2); border-radius: 1rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
+          🚘
+         </div>
+         <div>
+          <h3 style="font-size: 1.75rem; font-weight: 700; color: var(--text-color); margin-bottom: 0.25rem;">Exterior Accessories</h3>
+          <p style="color: rgba(255, 255, 255, 0.9); font-size: 0.975rem;">Bumpers, Grilles, Mirrors &amp; Lighting</p>
+         </div>
+        </div>
+        <svg class="category-dropdown-arrow" width="32" height="32" viewbox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+       </div>
+       <div class="category-dropdown-content" data-content="exterior" style="background-color: rgba(139, 0, 0, 0.05);">
+        <div class="subcategory-item" style="font-weight: 500;">
+         🔲 <a href="CT.html?part=Front+%26+Rear+Bumpers#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Front &amp; Rear Bumpers</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         ⬛ <a href="CT.html?part=Grilles+%26+Hood+Guards#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Grilles &amp; Hood Guards</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🪞 <a href="CT.html?part=Side+Mirrors+%26+Door+Handles#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Side Mirrors &amp; Door Handles</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         💡 <a href="CT.html?part=Headlights+%26+Tail+Lights#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Headlights &amp; Tail Lights</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🌧️ <a href="CT.html?part=Windshield+Wipers+%26+Blades#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Windshield Wipers &amp; Blades</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🎨 <a href="CT.html?part=Body+Kits+%26+Spoilers#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Body Kits &amp; Spoilers</a>
+        </div>
+       </div>
+      </div><!-- Interior Accessories -->
+      <div class="category-card" style="border-radius: 1rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border: 2px solid rgba(255, 255, 255, 0.1);">
+       <div class="category-dropdown-btn theme-inverse" data-dropdown="interior" style="padding: 2rem; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, var(--blood-red) 0%, var(--dark-red) 100%); border-radius: 0.875rem;">
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+         <div style="width: 70px; height: 70px; background-color: rgba(255, 255, 255, 0.2); border-radius: 1rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
+          🪑
+         </div>
+         <div>
+          <h3 style="font-size: 1.75rem; font-weight: 700; color: var(--text-color); margin-bottom: 0.25rem;">Interior Accessories</h3>
+          <p style="color: rgba(255, 255, 255, 0.9); font-size: 0.975rem;">Seats, Mats, Covers &amp; Trim</p>
+         </div>
+        </div>
+        <svg class="category-dropdown-arrow" width="32" height="32" viewbox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+       </div>
+       <div class="category-dropdown-content" data-content="interior" style="background-color: rgba(139, 0, 0, 0.05);">
+        <div class="subcategory-item" style="font-weight: 500;">
+         💺 <a href="CT.html?part=Seat+Covers+%26+Cushions#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Seat Covers &amp; Cushions</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🟫 <a href="CT.html?part=Floor+Mats+%26+Cargo+Liners#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Floor Mats &amp; Cargo Liners</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🎛️ <a href="CT.html?part=Dashboard+Trim+%26+Panels#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Dashboard Trim &amp; Panels</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🚗 <a href="CT.html?part=Steering+Wheel+Covers#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Steering Wheel Covers</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🌞 <a href="CT.html?part=Sun+Shades+%26+Visors#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Sun Shades &amp; Visors</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🧳 <a href="CT.html?part=Organizers+%26+Storage#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Organizers &amp; Storage</a>
+        </div>
+       </div>
+      </div><!-- Electronics & Gadgets -->
+      <div class="category-card" style="border-radius: 1rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border: 2px solid rgba(255, 255, 255, 0.1);">
+       <div class="category-dropdown-btn theme-inverse" data-dropdown="electronics" style="padding: 2rem; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, var(--blood-red) 0%, var(--dark-red) 100%); border-radius: 0.875rem;">
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+         <div style="width: 70px; height: 70px; background-color: rgba(255, 255, 255, 0.2); border-radius: 1rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
+          📱
+         </div>
+         <div>
+          <h3 style="font-size: 1.75rem; font-weight: 700; color: var(--text-color); margin-bottom: 0.25rem;">Electronics &amp; Gadgets</h3>
+          <p style="color: rgba(255, 255, 255, 0.9); font-size: 0.975rem;">Audio, Navigation, Cameras &amp; Tech</p>
+         </div>
+        </div>
+        <svg class="category-dropdown-arrow" width="32" height="32" viewbox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+       </div>
+       <div class="category-dropdown-content" data-content="electronics" style="background-color: rgba(139, 0, 0, 0.05);">
+        <div class="subcategory-item" style="font-weight: 500;">
+         🔊 <a href="CT.html?part=Audio+Systems+%26+Speakers#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Audio Systems &amp; Speakers</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🗺️ <a href="CT.html?part=GPS+Navigation+%26+Displays#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">GPS Navigation &amp; Displays</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         📹 <a href="CT.html?part=Dash+Cams+%26+Backup+Cameras#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Dash Cams &amp; Backup Cameras</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         📡 <a href="CT.html?part=Radar+Detectors+%26+Sensors#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Radar Detectors &amp; Sensors</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🔌 <a href="CT.html?part=Chargers+%26+Power+Adapters#contactForm" title="Enquire about this part" style="color: var(--text-color); text-decoration: none ;">Chargers &amp; Power Adapters</a>
+        </div>
+        <div class="subcategory-item" style="font-weight: 500;">
+         🚨 <a href="CT.html?part=Alarm+Systems+%26+Tracking#contactForm" title="Enquire about this part"style="color: var(--text-color); text-decoration: none ;">Alarm Systems &amp; Tracking</a>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Filter & Search Options Section -->
+   <section style="padding: 5rem 1.5rem; background: linear-gradient(135deg, var(--dark-gray) 0%, var(--black) 100%);">
+    <div style="max-width: 1280px; margin: 0 auto;">
+     <div style="text-align: center; margin-bottom: 4rem;">
+      <h2 id="filters-title" style="font-size: 2.75rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">Filter Your Search</h2>
+      <p style="font-size: 1.125rem; color: var(--muted-text);">Narrow down your options with our advanced filters</p>
+     </div>
+     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1100px; margin: 0 auto;" class="mobile-card-grid"><!-- Car Brand Filter -->
+      <div class="filter-dropdown"><button class="filter-btn theme-surface" data-filter="brand" style="width: 100%; background-color: var(--card-bg); color: var(--text-color); padding: 1.5rem; border: none; border-radius: 0.75rem; font-size: 1.125rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="display: flex; align-items: center; gap: 1rem;"><span style="font-size: 1.75rem;">🌍</span>
+         <div style="text-align: left;">
+          <div style="font-size: 0.75rem; color: var(--muted-text); font-weight: 500; text-transform: uppercase; margin-bottom: 0.25rem;">
+           Car Brand
+          </div>
+          <div id="brand-selected" style="color: var(--accent-text);">
+           Select Origin
+          </div>
+         </div>
+        </div>
+        <svg class="filter-arrow" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline>
+        </svg></button>
+       <div class="filter-options" data-options="brand">
+        <div class="filter-option" data-value="japan" style="display: flex; align-items: center; gap: 0.75rem;"><span style="font-size: 1.5rem;">🇯🇵</span> <span style="font-weight: 600;">Japan (Toyota, Honda, Nissan, Mazda)</span>
+        </div>
+        <div class="filter-option" data-value="korea" style="display: flex; align-items: center; gap: 0.75rem;"><span style="font-size: 1.5rem;">🇰🇷</span> <span style="font-weight: 600;">Korea (Hyundai, Kia, Genesis)</span>
+        </div>
+        <div class="filter-option" data-value="us" style="display: flex; align-items: center; gap: 0.75rem;"><span style="font-size: 1.5rem;">🇺🇸</span> <span style="font-weight: 600;">US (Ford, Chevrolet, Tesla, Cadillac)</span>
+        </div>
+        <div class="filter-option" data-value="germany" style="display: flex; align-items: center; gap: 0.75rem;"><span style="font-size: 1.5rem;">🇩🇪</span> <span style="font-weight: 600;">Germany (BMW, Mercedes, Audi, Porsche)</span>
+        </div>
+       </div>
+      </div><!-- Car Model / Year Filter -->
+      <div class="filter-dropdown"><button class="filter-btn theme-surface" data-filter="model" style="width: 100%; background-color: var(--card-bg); color: var(--text-color); padding: 1.5rem; border: none; border-radius: 0.75rem; font-size: 1.125rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="display: flex; align-items: center; gap: 1rem;"><span style="font-size: 1.75rem;">🚗</span>
+         <div style="text-align: left;">
+          <div style="font-size: 0.75rem; color: var(--muted-text); font-weight: 500; text-transform: uppercase; margin-bottom: 0.25rem;">
+           Model / Year
+          </div>
+          <div id="model-selected" style="color: var(--accent-text);">
+           Select Range
+          </div>
+         </div>
+        </div>
+        <svg class="filter-arrow" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline>
+        </svg></button>
+       <div class="filter-options" data-options="model">
+        <div class="filter-option" data-value="2024-2025">
+         <div style="font-weight: 700; color: var(--text-color);">
+          2024-2025 Models
+         </div>
+         <div style="font-size: 0.875rem; color: var(--muted-text); margin-top: 0.25rem;">
+          Latest Releases
+         </div>
+        </div>
+        <div class="filter-option" data-value="2020-2023">
+         <div style="font-weight: 700; color: var(--text-color);">
+          2020-2023 Models
+         </div>
+         <div style="font-size: 0.875rem; color: var(--muted-text); margin-top: 0.25rem;">
+          Recent Models
+         </div>
+        </div>
+        <div class="filter-option" data-value="2015-2019">
+         <div style="font-weight: 700; color: var(--text-color);">
+          2015-2019 Models
+         </div>
+         <div style="font-size: 0.875rem; color: var(--muted-text); margin-top: 0.25rem;">
+          Mid-Range Models
+         </div>
+        </div>
+        <div class="filter-option" data-value="2010-2014">
+         <div style="font-weight: 700; color: var(--text-color);">
+          2010-2014 Models
+         </div>
+         <div style="font-size: 0.875rem; color: var(--muted-text); margin-top: 0.25rem;">
+          Older Models
+         </div>
+        </div>
+        <div class="filter-option" data-value="pre-2010">
+         <div style="font-weight: 700; color: var(--text-color);">
+          Pre-2010 Models
+         </div>
+         <div style="font-size: 0.875rem; color: var(--muted-text); margin-top: 0.25rem;">
+          Classic &amp; Vintage
+         </div>
+        </div>
+       </div>
+      </div><!-- Price Range Filter -->
+      <div class="filter-dropdown"><button class="filter-btn theme-surface" data-filter="price" style="width: 100%; background-color: var(--card-bg); color: var(--text-color); padding: 1.5rem; border: none; border-radius: 0.75rem; font-size: 1.125rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="display: flex; align-items: center; gap: 1rem;"><span style="font-size: 1.75rem;">💰</span>
+         <div style="text-align: left;">
+          <div style="font-size: 0.75rem; color: var(--muted-text); font-weight: 500; text-transform: uppercase; margin-bottom: 0.25rem;">
+           Price Range
+          </div>
+          <div id="price-selected" style="color: var(--accent-text);">
+           Select Budget
+          </div>
+         </div>
+        </div>
+        <svg class="filter-arrow" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline>
+        </svg></button>
+       <div class="filter-options" data-options="price">
+        <div class="filter-option" data-value="0-50">
+         <div style="font-weight: 700; color: var(--text-color);">
+          $0 - $50
+         </div>
+         <div style="font-size: 0.875rem; color: var(--muted-text); margin-top: 0.25rem;">
+          Budget-Friendly
+         </div>
+        </div>
+        <div class="filter-option" data-value="50-150">
+         <div style="font-weight: 700; color: var(--text-color);">
+          $50 - $150
+         </div>
+         <div style="font-size: 0.875rem; color: var(--muted-text); margin-top: 0.25rem;">
+          Mid-Range
+         </div>
+        </div>
+        <div class="filter-option" data-value="150-300">
+         <div style="font-weight: 700; color: var(--text-color);">
+          $150 - $300
+         </div>
+         <div style="font-size: 0.875rem; color: var(--muted-text); margin-top: 0.25rem;">
+          Premium
+         </div>
+        </div>
+        <div class="filter-option" data-value="300-500">
+         <div style="font-weight: 700; color: var(--text-color);">
+          $300 - $500
+         </div>
+         <div style="font-size: 0.875rem; color: var(--muted-text); margin-top: 0.25rem;">
+          High-End
+         </div>
+        </div>
+        <div class="filter-option" data-value="500+">
+         <div style="font-weight: 700; color: var(--text-color);">
+          $500+
+         </div>
+         <div style="font-size: 0.875rem; color: var(--muted-text); margin-top: 0.25rem;">
+          Luxury Parts
+         </div>
+        </div>
+       </div>
+      </div><!-- Part Type Filter -->
+      <div class="filter-dropdown"><button class="filter-btn theme-surface" data-filter="type" style="width: 100%; background-color: var(--card-bg); color: var(--text-color); padding: 1.5rem; border: none; border-radius: 0.75rem; font-size: 1.125rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="display: flex; align-items: center; gap: 1rem;"><span style="font-size: 1.75rem;">🔧</span>
+         <div style="text-align: left;">
+          <div style="font-size: 0.75rem; color: var(--muted-text); font-weight: 500; text-transform: uppercase; margin-bottom: 0.25rem;">
+           Part Type
+          </div>
+          <div id="type-selected" style="color: var(--accent-text);">
+           Select Category
+          </div>
+         </div>
+        </div>
+        <svg class="filter-arrow" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline>
+        </svg></button>
+       <div class="filter-options" data-options="type">
+        <div class="filter-option" data-value="engine">
+         <div style="font-weight: 700; color: var(--text-color);">
+          ⚙️ Engine Parts
+         </div>
+        </div>
+        <div class="filter-option" data-value="brakes">
+         <div style="font-weight: 700; color: var(--text-color);">
+          🛑 Brakes &amp; Suspension
+         </div>
+        </div>
+        <div class="filter-option" data-value="exterior">
+         <div style="font-weight: 700; color: var(--text-color);">
+          🚘 Exterior Accessories
+         </div>
+        </div>
+        <div class="filter-option" data-value="interior">
+         <div style="font-weight: 700; color: var(--text-color);">
+          🪑 Interior Accessories
+         </div>
+        </div>
+        <div class="filter-option" data-value="electronics">
+         <div style="font-weight: 700; color: var(--text-color);">
+          📱 Electronics &amp; Gadgets
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Active Filters Display -->
+     <div id="active-filters" style="margin-top: 3rem; text-align: center;">
+      <div style="display: flex; gap: 1rem; justify-content: center; align-items: center; flex-wrap: wrap;"><button id="apply-filters" style="background-color: var(--blood-red); color: white; padding: 1rem 3rem; border: none; border-radius: 0.75rem; font-size: 1.125rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(139, 0, 0, 0.4);" class="theme-inverse"> Apply Filters </button> <button id="clear-filters" style="background-color: var(--dark-red); color: white; padding: 1rem 2rem; border: none; border-radius: 0.75rem; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease;" class="theme-inverse"> Clear All </button>
+      </div>
+      <div id="filter-tags" style="margin-top: 1.5rem; display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; min-height: 2.5rem;"></div>
+     </div>
+    </div>
+   </section>
+   <!-- Featured Products Section -->
+<section id="products" style="padding: 5rem 1.5rem; background-color: var(--bg-color);" class="theme-surface">
+    <div style="max-width: 1280px; margin: 0 auto;">
+     <div style="text-align: center; margin-bottom: 4rem;">
+      <h2 style="font-size: 2.75rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">Featured Products</h2>
+      <p style="font-size: 1.125rem; color: var(--muted-text);">Explore our selection of premium parts and accessories</p>
+     </div>
+     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;" class="mobile-card-grid"><div class="product-card" style="border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+       <div class="image-wrapper" data-image="img/brakepadsset.jpg" style="height: 400px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: var(--dark-gray); cursor: pointer;">
+        <img src="https://www.powerstop.com/wp-content/uploads/2019/06/power-stop-z26-street-warrior-brake-pads.jpg" alt="Performance Brake Pads" style="width: 100%; height: 100%; object-fit: cover;">
+       </div>
+       <div style="padding: 1.75rem;"><span class="badge" style="background-color: rgba(139, 0, 0, 0.2); color: var(--accent-text); margin-bottom: 1rem;">Brakes</span>
+        <h3 style="font-size: 1.375rem; font-weight: 700; color: var(--text-color); margin-bottom: 0.75rem;">Performance Brake Pads Set</h3>
+        <p style="color: var(--muted-text); margin-bottom: 1.25rem; line-height: 1.7;">Premium ceramic brake pads for superior stopping power and reduced noise.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+         <div style="font-size: 2rem; font-weight: 800; color: var(--accent-text);">
+          $129.99
+         </div><button style="background-color: var(--blood-red); color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 0.5rem; font-weight: 700; cursor: pointer;" class="theme-inverse">Add to garage</button>
+        </div>
+       </div>
+      </div><div class="product-card" style="border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+       <div class="image-wrapper" data-image="img/highflowairfilter.jpg" style="height: 400px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: var(--dark-gray); cursor: pointer;">
+        <img src="https://image.made-in-china.com/202f0j00YGebtCAZymqJ/Customized-High-Flow-Air-Intake-Filter-Auto-Air-Filter-for-K-N-E-2993-Fords-Focus-Car-2-0L-L4.webp" alt="High-Flow Air Filter" style="width: 100%; height: 100%; object-fit: cover;">
+       </div>
+       <div style="padding: 1.75rem;"><span class="badge" style="background-color: rgba(139, 0, 0, 0.2); color: var(--accent-text); margin-bottom: 1rem;">Engine</span>
+        <h3 style="font-size: 1.375rem; font-weight: 700; color: var(--text-color); margin-bottom: 0.75rem;">High-Flow Air Filter</h3>
+        <p style="color: var(--muted-text); margin-bottom: 1.25rem; line-height: 1.7;">Increase horsepower and acceleration with our washable, reusable air filter.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+         <div style="font-size: 2rem; font-weight: 800; color: var(--accent-text);">
+          $89.99
+         </div><button style="background-color: var(--blood-red); color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 0.5rem; font-weight: 700; cursor: pointer;" class="theme-inverse">Add to garage</button>
+        </div>
+       </div>
+      </div><div class="product-card" style="border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+       <div class="image-wrapper" data-image="img/camera.jpg" style="height: 400px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: var(--dark-gray); cursor: pointer;">
+        <img src="https://cdn3.geckoandfly.com/wp-content/uploads/2016/01/camonroad-dash-cam-recorder-android.jpg" alt="HD Dash Camera System" style="width: 100%; height: 100%; object-fit: cover;">
+       </div>
+       <div style="padding: 1.75rem;"><span class="badge" style="background-color: rgba(139, 0, 0, 0.2); color: var(--accent-text); margin-bottom: 1rem;">Electronics</span>
+        <h3 style="font-size: 1.375rem; font-weight: 700; color: var(--text-color); margin-bottom: 0.75rem;">HD Dash Camera System</h3>
+        <p style="color: var(--muted-text); margin-bottom: 1.25rem; line-height: 1.7;">1080p front and rear cameras with night vision and parking mode protection.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+         <div style="font-size: 2rem; font-weight: 800; color: var(--accent-text);">
+          $199.99
+         </div><button style="background-color: var(--blood-red); color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 0.5rem; font-weight: 700; cursor: pointer;" class="theme-inverse">Add to garage</button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    
+    <div id="lightbox" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); z-index: 9999; justify-content: center; align-items: center;" class="theme-inverse">
+        <span id="close-btn" style="position: absolute; top: 20px; right: 35px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; opacity: 0.8; transition: opacity 0.2s;">&times;</span>
+        <img id="lightbox-image" src="" alt="Full-Screen Product Image" style="max-width: 90%; max-height: 90%; object-fit: contain;">
+    </div>
+</section>
+
+  </div>
+
+  <footer>
+   <div class="footer-content">
+            <div class="footer-column">
+                <h3>LUXE MOTION</h3>
+                <ul>
+                    <li><a href="H2.html" style="color:red;">Home</a></li>
+                    <li><a href="AU.html" style="color:red;">About Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>SHOP</h3>
+                <ul>
+                    <li><a href="Slast.html" style="color:red;">Shop / Cars</a></li>
+                    <li><a href="P3.html" style="color:red;">Car Parts & Accessories</a></li>
+                    <li><a href="OF1.html" style="color:red;">Special Offers / Promotions</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>UPDATES</h3>
+                <ul>
+                    <li><a href="BLO.html" style="color:red;">Blog / News</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>SUPPORT</h3>
+                <ul>
+                    <li><a href="faq1.html" style="color:red;">Support / FAQ</a></li>
+                    <li><a href="CT.html" style="color:red;">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>ACCOUNT</h3>
+                <ul>
+                    <li><a href="garage_1.html" style="color:red;">Garage</a></li>
+               
+                </ul>
+
+                <div class="social-icons">
+                   <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+<a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+<a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- NEW: Car Brand Icons Section -->
+        <div class="brand-icons-section">
+            <h3>OUR BRANDS</h3>
+            <div class="brand-icons">
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/toyota.jpg" alt="Toyota">
+                    </div>
+                    <div class="brand-icon-name">Toyota</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/honda.jpg" alt="Honda">
+                    </div>
+                    <div class="brand-icon-name">Honda</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/nissan.svg" alt="Nissan">
+                    </div>
+                    <div class="brand-icon-name">Nissan</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/hyundai.jpg" alt="Hyundai">
+                    </div>
+                    <div class="brand-icon-name">Hyundai</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/kia.jpg" alt="Kia">
+                    </div>
+                    <div class="brand-icon-name">Kia</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/ford.svg" alt="Ford">
+                    </div>
+                    <div class="brand-icon-name">Ford</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/chevrolet.jpg" alt="Chevrolet">
+                    </div>
+                    <div class="brand-icon-name">Chevrolet</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/bmw.svg" alt="BMW">
+                    </div>
+                    <div class="brand-icon-name">BMW</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/mercedes-benz.svg" alt="Mercedes-Benz">
+                    </div>
+                    <div class="brand-icon-name">Mercedes-Benz</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/audi.jpg" alt="Audi">
+                    </div>
+                    <div class="brand-icon-name">Audi</div>
+                </div>
+            </div>
+        </div>
+
+
+
+    <div class="copyright">
+      <p>&copy; 2025 LuxeMotion. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+        const defaultConfig = {
+            background_color: "#121212",
+            surface_color: "#1a1a1a",
+            text_color: "#ffffff",
+            primary_action_color: "#8B0000",
+            secondary_action_color: "#121212",
+            font_family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+            font_size: 16,
+            hero_title: "Premium Auto Parts & Accessories",
+            hero_subtitle: "Discover high-quality parts and accessories for your luxury vehicle",
+            categories_title: "Browse by Category",
+            filters_title: "Filter Your Search"
+        };
+
+        let config = { ...defaultConfig };
+        let activeFilters = {
+            brand: null,
+            model: null,
+            price: null,
+            type: null
+        };
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or default to dark
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        
+        // Update icon based on current theme
+        if (currentTheme === 'light') {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            // Toggle between dark and light themes
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update icon
+            if (newTheme === 'light') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Category Dropdown Functionality
+        document.querySelectorAll('.category-dropdown-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const dropdownName = this.getAttribute('data-dropdown');
+                const content = document.querySelector(`[data-content="${dropdownName}"]`);
+                const arrow = this.querySelector('.category-dropdown-arrow');
+                
+                content.classList.toggle('active');
+                arrow.classList.toggle('rotated');
+            });
+        });
+
+        // Filter Dropdown Functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const filterName = this.getAttribute('data-filter');
+                const options = document.querySelector(`[data-options="${filterName}"]`);
+                const arrow = this.querySelector('.filter-arrow');
+                
+                // Close all other dropdowns
+                document.querySelectorAll('.filter-options').forEach(opt => {
+                    if (opt !== options) {
+                        opt.classList.remove('active');
+                    }
+                });
+                
+                document.querySelectorAll('.filter-arrow').forEach(arr => {
+                    if (arr !== arrow) {
+                        arr.style.transform = 'rotate(0deg)';
+                    }
+                });
+                
+                options.classList.toggle('active');
+                arrow.style.transform = options.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.filter-dropdown')) {
+                document.querySelectorAll('.filter-options').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                document.querySelectorAll('.filter-arrow').forEach(arr => {
+                    arr.style.transform = 'rotate(0deg)';
+                });
+            }
+        });
+
+        // Filter Option Selection
+        document.querySelectorAll('.filter-option').forEach(option => {
+            option.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const filterType = this.closest('.filter-options').getAttribute('data-options');
+                const value = this.getAttribute('data-value');
+                
+                // Remove selected class from siblings
+                this.parentElement.querySelectorAll('.filter-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to this option
+                this.classList.add('selected');
+                
+                // Update active filters
+                activeFilters[filterType] = value;
+                
+                // Update selected text
+                const selectedText = this.textContent.trim().split('\n')[0];
+                document.getElementById(`${filterType}-selected`).textContent = selectedText;
+                
+                // Close dropdown
+                this.closest('.filter-options').classList.remove('active');
+                this.closest('.filter-dropdown').querySelector('.filter-arrow').style.transform = 'rotate(0deg)';
+                
+                updateFilterTags();
+            });
+        });
+
+        function updateFilterTags() {
+            const tagsContainer = document.getElementById('filter-tags');
+            tagsContainer.innerHTML = '';
+            
+            Object.keys(activeFilters).forEach(filterType => {
+                if (activeFilters[filterType]) {
+                    const tag = document.createElement('div');
+                    tag.style.cssText = 'background-color: var(--blood-red); color: white; padding: 0.5rem 1rem; border-radius: 9999px; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;';
+                    
+                    const filterName = filterType.charAt(0).toUpperCase() + filterType.slice(1);
+                    const selectedOption = document.querySelector(`[data-options="${filterType}"] .filter-option.selected`);
+                    const displayText = selectedOption ? selectedOption.textContent.trim().split('\n')[0] : activeFilters[filterType];
+                    
+                    tag.innerHTML = `
+                        <span>${filterName}: ${displayText}</span>
+                        <button onclick="removeFilter('${filterType}')" style="background: none; border: none; color: white; cursor: pointer; font-size: 1.25rem; line-height: 1; padding: 0;">×</button>
+                    `;
+                    tagsContainer.appendChild(tag);
+                }
+            });
+        }
+
+        function removeFilter(filterType) {
+            activeFilters[filterType] = null;
+            document.getElementById(`${filterType}-selected`).textContent = getDefaultText(filterType);
+            document.querySelectorAll(`[data-options="${filterType}"] .filter-option`).forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            updateFilterTags();
+        }
+
+        function getDefaultText(filterType) {
+            const defaults = {
+                brand: 'Select Origin',
+                model: 'Select Range',
+                price: 'Select Budget',
+                type: 'Select Category'
+            };
+            return defaults[filterType];
+        }
+
+        document.getElementById('apply-filters').addEventListener('click', function() {
+            const selectedType = activeFilters.type;
+            document.querySelectorAll('.category-card').forEach(card => {
+                const button = card.querySelector('[data-dropdown]');
+                card.hidden = Boolean(selectedType && button.dataset.dropdown !== selectedType);
+            });
+            document.getElementById('categories').scrollIntoView({behavior: 'smooth'});
+            const summary = document.getElementById('filters-title');
+            summary.textContent = selectedType ? 'Matching Part Categories' : 'All Part Categories';
+            if (activeFilters.brand || activeFilters.model || activeFilters.price) {
+                summary.textContent += ' — contact us to confirm vehicle fit and price';
+            }
+        });
+
+        document.getElementById('clear-filters').addEventListener('click', function() {
+            Object.keys(activeFilters).forEach(key => {
+                activeFilters[key] = null;
+                document.getElementById(`${key}-selected`).textContent = getDefaultText(key);
+            });
+            
+            document.querySelectorAll('.filter-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            updateFilterTags();
+            document.querySelectorAll('.category-card').forEach(card => { card.hidden = false; });
+            document.getElementById('filters-title').textContent = 'Filter Your Search';
+        });
+
+        async function onConfigChange(updatedConfig) {
+            const baseFont = updatedConfig.font_family || defaultConfig.font_family;
+            const baseFontStack = `${baseFont}, system-ui, -apple-system, sans-serif`;
+            const baseSize = updatedConfig.font_size || defaultConfig.font_size;
+            
+            document.body.style.fontFamily = baseFontStack;
+            
+            const bgColor = updatedConfig.background_color || defaultConfig.background_color;
+            const surfaceColor = updatedConfig.surface_color || defaultConfig.surface_color;
+            const textColor = updatedConfig.text_color || defaultConfig.text_color;
+            const primaryColor = updatedConfig.primary_action_color || defaultConfig.primary_action_color;
+            const secondaryColor = updatedConfig.secondary_action_color || defaultConfig.secondary_action_color;
+            
+            document.documentElement.style.setProperty('--bg-color', bgColor);
+            document.documentElement.style.setProperty('--primary-color', primaryColor);
+            
+            document.querySelector('body > div').style.backgroundColor = bgColor;
+            
+            const sections = document.querySelectorAll('section');
+            sections[0].style.background = `linear-gradient(135deg, ${bgColor} 0%, ${primaryColor} 100%)`;
+            sections[1].style.backgroundColor = surfaceColor;
+            sections[2].style.background = `linear-gradient(135deg, ${secondaryColor} 0%, #0f172a 100%)`;
+            sections[3].style.backgroundColor = bgColor;
+            
+            document.querySelectorAll('h1, h2, h3, h4').forEach(el => {
+                if (el.closest('nav') || el.closest('footer') || el.closest('section[style*="linear-gradient"]') || el.closest('.category-dropdown-btn')) {
+                    return;
+                }
+                el.style.color = textColor;
+            });
+            
+            document.getElementById('hero-title').style.fontSize = `${baseSize * 2.19}px`;
+            document.getElementById('hero-subtitle').style.fontSize = `${baseSize * 0.86}px`;
+            document.querySelectorAll('section > div > div > h2').forEach(el => {
+                el.style.fontSize = `${baseSize * 1.72}px`;
+            });
+            
+            document.querySelectorAll('button').forEach(btn => {
+                const btnText = btn.textContent.toLowerCase();
+                if (btnText.includes('apply') || btnText.includes('cart') || btnText.includes('add')) {
+                    btn.style.backgroundColor = primaryColor;
+                }
+            });
+            
+            const heroTitle = updatedConfig.hero_title || defaultConfig.hero_title;
+            const heroSubtitle = updatedConfig.hero_subtitle || defaultConfig.hero_subtitle;
+            const categoriesTitle = updatedConfig.categories_title || defaultConfig.categories_title;
+            const filtersTitle = updatedConfig.filters_title || defaultConfig.filters_title;
+            
+            document.getElementById('hero-title').textContent = heroTitle;
+            document.getElementById('hero-subtitle').textContent = heroSubtitle;
+            document.getElementById('categories-title').textContent = categoriesTitle;
+            document.getElementById('filters-title').textContent = filtersTitle;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ background_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ surface_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ text_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                        set: (value) => {
+                            config.primary_action_color = value;
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ primary_action_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+                        set: (value) => {
+                            config.secondary_action_color = value;
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ secondary_action_color: value });
+                            }
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        config.font_family = value;
+                        if (window.elementSdk) {
+                            window.elementSdk.setConfig({ font_family: value });
+                        }
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        config.font_size = value;
+                        if (window.elementSdk) {
+                            window.elementSdk.setConfig({ font_size: value });
+                        }
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["hero_title", config.hero_title || defaultConfig.hero_title],
+                ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
+                ["categories_title", config.categories_title || defaultConfig.categories_title],
+                ["filters_title", config.filters_title || defaultConfig.filters_title]
+            ]);
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+    </script>
+ 
+
+
+</body>
+</html>

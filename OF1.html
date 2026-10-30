@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxeMotion - Special Offers &amp; Promotions</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css?v=2">
+  <style>
+        :root {
+            --blood-red: #8B0000;
+            --dark-red: #660000;
+            --black: #121212;
+            --dark-gray: #1a1a1a;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --card-bg: #1a1a1a;
+            --header-bg: #121212;
+            --footer-bg: #1a1a1a;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f5f5f5;
+            --text-color: #121212;
+            --card-bg: #ffffff;
+            --header-bg: #ffffff;
+            --footer-bg: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+
+
+        /* Offers Page Specific Styles */
+        .hero-gradient {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .discount-badge {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 30px rgba(239, 68, 68, 0.8);
+            }
+        }
+
+        .tier-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tier-card:hover {
+            transform: scale(1.05);
+        }
+
+        .countdown-timer {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .offer-ribbon {
+            position: absolute;
+            top: 20px;
+            right: -10px;
+            background: linear-gradient(135deg, var(--blood-red) 0%, var(--dark-red) 100%);
+            color: white;
+            padding: 8px 20px;
+            font-weight: 700;
+            font-size: 0.875rem;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 10% 100%);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--blood-red);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: var(--dark-red);
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 60px 0 30px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 3px;
+            background-color: var(--blood-red);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+       :root {
+    --nav-height: 80px;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: var(--nav-height);
+    width: 100%;
+    z-index: 1000;
+}
+
+.hero-gradient {
+    position: relative;
+    margin-top: var(--nav-height);
+    height: calc(100vh - var(--nav-height));
+    overflow: hidden;
+}
+
+.hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.video-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 2;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  
+ <link rel="stylesheet" href="theme.css?v=2">
+<link rel="stylesheet" href="mobile.css?v=3">
+<script src="mobile.js?v=3" defer></script>
+</head>
+ <body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="https://www.shutterstock.com/image-vector/lm-letter-vector-logo-260nw-633760886.jpg" alt="LuxeMotion Logo" class="circular-logo-img">
+                <h1>Luxe<span>Motion</span></h1>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="H2.html"><i class="fas fa-home"></i> <span>Home</span></a></li>
+                    <li><a href="AU.html"><i class="fas fa-info-circle"></i> <span>About</span></a></li>
+
+                    <li class="dropdown">
+                        <a href="Slast.html"><i class="fas fa-shopping-cart"></i> 
+                            <span>Shop</span> <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="Toyota.html">Toyota</a>
+                            <a href="Honda.html">Honda</a>
+                            <a href="bmw.html">BMW</a>
+                            <a href="Slast.html">Nissan</a>
+                            <a href="Slast.html">Hyundai</a>
+                            <a href="Slast.html">Kai</a>
+                        </div>
+                    </li>
+                     
+                     <li class="dropdown">
+                        <a href="Slast.html"><i class="fas fa-flag"></i> <span>Brands</span> <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="japan.html">Japanese</a>
+                            <a href="German.html">German</a>
+                            <a href="japan.html">Korean</a>
+                            <a href="German.html">American</a>
+                           
+                        </div>
+                    </li>
+
+                     <li><a href="P3.html"><i class="fas fa-cogs"></i> <span>Parts</span></a></li>
+
+                    <li><a href="OF1.html"><i class="fas fa-tag"></i> <span>Offers</span></a></li>
+
+                    <li><a href="BLO.html"><i class="fas fa-newspaper"></i> <span>Blog</span></a></li>
+
+                    <li><a href="faq1.html"><i class="fas fa-question-circle"></i> <span>FAQ</span></a></li>
+
+                    <li><a href="CT.html"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-icons">
+                <a href="garage_1.html" title="Garage"><i class="fas fa-warehouse"></i></a>
+                <!-- Updated User Icon - Now Clickable -->
+                <a href="#" class="user-icon" title="Account" id="userIcon">
+                    <i class="fas fa-user"></i>
+                </a>
+
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+   <section class="hero-gradient mobile-video-section">
+    <!-- Background Video -->
+    <video class="hero-video mobile-video-media" autoplay muted loop playsinline>
+        <source src="OFFER.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Dark Overlay (optional but recommended) -->
+    <div class="video-overlay mobile-video-shade"></div>
+
+    <!-- Content -->
+    <div class="hero-content mobile-video-copy">
+        <div style="display: inline-block; background-color: var(--blood-red); color: white; padding: 0.5rem 1.5rem; border-radius: 9999px; font-weight: 700; margin-bottom: 1.5rem; font-size: 0.875rem; letter-spacing: 0.05em;" class="theme-inverse">
+            🔥 LIMITED TIME OFFERS
+        </div>
+
+        <h1 id="hero-title">Unbeatable Deals Await</h1>
+
+        <p id="hero-subtitle">
+            Save big on premium luxury vehicles with our exclusive promotions
+        </p>
+
+       
+    </div>
+</section>
+
+
+    <section id="discounted" style="padding: 5rem 1.5rem; background-color: var(--bg-color);" class="theme-surface">
+        <div style="max-width: 1280px; margin: 0 auto;">
+            <div class="section-title">
+                <h2 id="discounted-title">Discounted Luxury Cars</h2>
+                <p style="font-size: 1.125rem; color: var(--muted-text);">Premium vehicles at unbeatable prices</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem;" class="mobile-card-grid">
+                <!-- Discounted Car 1 -->
+                <div class="card-hover theme-surface" style="background-color: var(--card-bg); border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); position: relative; border: 2px solid #333;">
+                    <div class="offer-ribbon">
+                        SAVE $15,000
+                    </div>
+                    
+                        <img src="https://tse1.mm.bing.net/th/id/OIP.6jHKXLKNbBZ24t6dW4yYIwHaE7?rs=1&pid=ImgDetMain&o=7&rm=3" alt="BMW X7 M50i" style="width: 100%;">
+                        <div class="discount-badge theme-inverse" style="position: absolute; top: 15px; left: 15px; background-color: var(--blood-red); color: white; padding: 0.75rem 1rem; border-radius: 0.75rem; font-weight: 800; font-size: 1.25rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
+                            -15%
+                        </div>
+                    
+                    <div style="padding: 1.75rem;">
+                        <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 0.5rem;">
+                            <h3 style="font-size: 1.625rem; font-weight: 700; color: var(--text-color);">BMW X7 M50i</h3>
+                        </div>
+                        <p style="color: var(--muted-text); margin-bottom: 1rem; font-size: 0.95rem;">2023 • 8,500 mi • V8 Engine • AWD</p>
+                        <div style="background-color: var(--subtle-bg); border-left: 4px solid #f59e0b; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+                            <p style="color: #f59e0b; font-size: 0.875rem; font-weight: 600;">⏰ Offer expires in 5 days</p>
+                        </div>
+                        <div style="display: flex; gap: 0.75rem; align-items: baseline; margin-bottom: 1.25rem;">
+                            <span style="font-size: 1.25rem; color: var(--muted-text); text-decoration: line-through;">$104,900</span>
+                            <span style="font-size: 2rem; font-weight: 800; color: var(--accent-text);">$89,900</span>
+                        </div>
+                        <a href="garage_1.html" class="cta-button" style="display: block; text-align: center;">Add to garage</a>
+                    </div>
+                </div>
+
+                <!-- Discounted Car 2 -->
+                <div class="card-hover theme-surface" style="background-color: var(--card-bg); border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); position: relative; border: 2px solid #333;">
+                    <div class="offer-ribbon">
+                        SAVE $12,000
+                    </div>
+                    
+                        <img src="https://www.rentalcar-canarias.com/img/products/127_audi_q8_v.jpg" alt="Audi Q8 Prestige" style="width: 100%;">
+                        <div class="discount-badge theme-inverse" style="position: absolute; top: 15px; left: 15px; background-color: var(--blood-red); color: white; padding: 0.75rem 1rem; border-radius: 0.75rem; font-weight: 800; font-size: 1.25rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
+                            -12%
+                        </div>
+                    
+                    <div style="padding: 1.75rem;">
+                        <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 0.5rem;">
+                            <h3 style="font-size: 1.625rem; font-weight: 700; color: var(--text-color);">Audi Q8 Prestige</h3>
+                        </div>
+                        <p style="color: var(--muted-text); margin-bottom: 1rem; font-size: 0.95rem;">2023 • 6,200 mi • Turbocharged • Quattro</p>
+                        <div style="background-color: var(--subtle-bg); border-left: 4px solid #f59e0b; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+                            <p style="color: #f59e0b; font-size: 0.875rem; font-weight: 600;">⏰ Offer expires in 3 days</p>
+                        </div>
+                        <div style="display: flex; gap: 0.75rem; align-items: baseline; margin-bottom: 1.25rem;">
+                            <span style="font-size: 1.25rem; color: var(--muted-text); text-decoration: line-through;">$99,500</span>
+                            <span style="font-size: 2rem; font-weight: 800; color: var(--accent-text);">$87,500</span>
+                        </div>
+                        <a href="garage_1.html" class="cta-button" style="display: block; text-align: center;">Add to garage</a>
+                    </div>
+                </div>
+
+                <!-- Discounted Car 3 -->
+                <div class="card-hover theme-surface" style="background-color: var(--card-bg); border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); position: relative; border: 2px solid #333;">
+                    <div class="offer-ribbon">
+                        SAVE $18,000
+                    </div>
+                   
+                        <img src="https://cdn.motor1.com/images/mgl/o0BX0/s1/2021-mercedes-benz-s-580-e-in-european-specification-3.jpg" alt="Mercedes S 580" style="width: 100%;">
+                        <div class="discount-badge theme-inverse" style="position: absolute; top: 15px; left: 15px; background-color: var(--blood-red); color: white; padding: 0.75rem 1rem; border-radius: 0.75rem; font-weight: 800; font-size: 1.25rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
+                            -17%
+                        </div>
+                    
+                    <div style="padding: 1.75rem;">
+                        <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 0.5rem;">
+                            <h3 style="font-size: 1.625rem; font-weight: 700; color: var(--text-color);">Mercedes S 580</h3>
+                        </div>
+                        <p style="color: var(--muted-text); margin-bottom: 1rem; font-size: 0.95rem;">2023 • 5,800 mi • Twin-Turbo V8 • 4MATIC</p>
+                        <div style="background-color: var(--subtle-bg); border-left: 4px solid #f59e0b; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+                            <p style="color: #f59e0b; font-size: 0.875rem; font-weight: 600;">⏰ Offer expires in 7 days</p>
+                        </div>
+                        <div style="display: flex; gap: 0.75rem; align-items: baseline; margin-bottom: 1.25rem;">
+                            <span style="font-size: 1.25rem; color: var(--muted-text); text-decoration: line-through;">$124,900</span>
+                            <span style="font-size: 2rem; font-weight: 800; color: var(--accent-text);">$106,900</span>
+                        </div>
+                        <a href="garage_1.html" class="cta-button" style="display: block; text-align: center;">Add to garage</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="seasonal" style="padding: 5rem 1.5rem; background: var(--bg-color);" class="theme-surface">
+        <div style="max-width: 1280px; margin: 0 auto;">
+            <div class="section-title">
+                <h2 id="seasonal-title" style="color: var(--text-color);">Seasonal Offers</h2>
+                <p style="font-size: 1.125rem; color: var(--muted-text);">Don't miss these limited-time seasonal promotions</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;" class="mobile-card-grid">
+                <!-- Summer Sale -->
+                <div style="background-color: var(--card-bg); border-radius: 1.25rem; padding: 2.5rem; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); position: relative; overflow: hidden;" class="theme-surface">
+                    <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background-color: #fef3c7; border-radius: 50%; opacity: 0.3;"></div>
+                    <div style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: white; width: 5rem; height: 5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2.5rem; box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);" class="theme-inverse">
+                        ☀️
+                    </div>
+                    <h3 style="font-size: 1.75rem; font-weight: 700; color: var(--text-color); margin-bottom: 0.75rem;">Summer Clearance</h3>
+                    <div style="background-color: var(--blood-red); color: white; padding: 0.5rem 1rem; border-radius: 9999px; display: inline-block; font-weight: 700; margin-bottom: 1rem; font-size: 1.125rem;" class="theme-inverse">
+                        UP TO 20% OFF
+                    </div>
+                    <p style="color: var(--muted-text); margin-bottom: 1.5rem; line-height: 1.6;">Clear out last year's models with massive savings on select premium vehicles</p>
+                    <p style="color: var(--accent-text); font-weight: 700; font-size: 1rem; margin-bottom: 1rem;">⏰ Ends August 31st</p>
+                    <a href="Slast.html" class="cta-button" style="display: block; text-align: center;">Shop Summer Sale</a>
+                </div>
+
+                <!-- Holiday Special -->
+                <div style="background-color: var(--card-bg); border-radius: 1.25rem; padding: 2.5rem; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); position: relative; overflow: hidden;" class="theme-surface">
+                    <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background-color: #ddd6fe; border-radius: 50%; opacity: 0.3;"></div>
+                    <div style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; width: 5rem; height: 5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2.5rem; box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);" class="theme-inverse">
+                        🎁
+                    </div>
+                    <h3 style="font-size: 1.75rem; font-weight: 700; color: var(--text-color); margin-bottom: 0.75rem;">Holiday Special</h3>
+                    <div style="background-color: var(--blood-red); color: white; padding: 0.5rem 1rem; border-radius: 9999px; display: inline-block; font-weight: 700; margin-bottom: 1rem; font-size: 1.125rem;" class="theme-inverse">
+                        0% APR FINANCING
+                    </div>
+                    <p style="color: var(--muted-text); margin-bottom: 1.5rem; line-height: 1.6;">Celebrate the season with zero-interest financing for up to 60 months</p>
+                    <p style="color: var(--accent-text); font-weight: 700; font-size: 1rem; margin-bottom: 1rem;">⏰ Limited Time Only</p>
+                    <a href="faq1.html" class="cta-button" style="display: block; text-align: center;">Learn More</a>
+                </div>
+
+                <!-- Year-End Bonus -->
+                <div style="background-color: var(--card-bg); border-radius: 1.25rem; padding: 2.5rem; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); position: relative; overflow: hidden;" class="theme-surface">
+                    <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background-color: #fecaca; border-radius: 50%; opacity: 0.3;"></div>
+                    <div style="background: linear-gradient(135deg, var(--blood-red) 0%, var(--dark-red) 100%); color: white; width: 5rem; height: 5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2.5rem; box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);" class="theme-inverse">
+                        🎊
+                    </div>
+                    <h3 style="font-size: 1.75rem; font-weight: 700; color: var(--text-color); margin-bottom: 0.75rem;">Year-End Bonus</h3>
+                    <div style="background-color: var(--blood-red); color: white; padding: 0.5rem 1rem; border-radius: 9999px; display: inline-block; font-weight: 700; margin-bottom: 1rem; font-size: 1.125rem;" class="theme-inverse">
+                        $5,000 CASH BACK
+                    </div>
+                    <p style="color: var(--muted-text); margin-bottom: 1.5rem; line-height: 1.6;">End the year right with exclusive cash back on new 2024 models</p>
+                    <p style="color: var(--accent-text); font-weight: 700; font-size: 1rem; margin-bottom: 1rem;">⏰ Ends December 31st</p>
+                    <a href="Slast.html" class="cta-button" style="display: block; text-align: center;">Get Cash Back</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="loyalty" style="padding: 5rem 1.5rem; background-color: var(--bg-color);" class="theme-surface">
+        <div style="max-width: 1280px; margin: 0 auto;">
+            <div class="section-title">
+                <h2 id="loyalty-title">LuxeMotion Rewards Program</h2>
+                <p id="loyalty-subtitle" style="font-size: 1.25rem; color: var(--muted-text); max-width: 42rem; margin: 0 auto;">Join our exclusive loyalty program and unlock premium benefits with every purchase</p>
+            </div>
+
+            <!-- Program Benefits Banner -->
+            <div style="background: linear-gradient(135deg, var(--blood-red) 0%, var(--dark-red) 100%); border-radius: 1.5rem; padding: 3rem 2rem; margin-bottom: 3rem; text-align: center; box-shadow: 0 10px 30px rgba(139, 0, 0, 0.3);" class="theme-inverse">
+                <h3 style="font-size: 2rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">Membership Benefits</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 2rem;" class="mobile-card-grid">
+                    <div>
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">
+                            🎯
+                        </div>
+                        <p style="color: var(--muted-text); font-weight: 600;">Priority Access</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">
+                            💰
+                        </div>
+                        <p style="color: var(--muted-text); font-weight: 600;">Exclusive Discounts</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">
+                            🔧
+                        </div>
+                        <p style="color: var(--muted-text); font-weight: 600;">Free Maintenance</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">
+                            ⭐
+                        </div>
+                        <p style="color: var(--muted-text); font-weight: 600;">VIP Service</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier Cards -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;" class="mobile-card-grid">
+                <!-- Silver Tier -->
+                <div class="tier-card theme-surface" style="background-color: var(--card-bg); border: 3px solid #94a3b8; border-radius: 1.25rem; padding: 2.5rem 2rem; text-align: center; position: relative; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+                    <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%); color: white; padding: 0.5rem 1.5rem; border-radius: 9999px; font-weight: 700; font-size: 0.875rem;" class="theme-inverse">
+                        SILVER
+                    </div>
+                    <div style="margin-top: 1rem; margin-bottom: 1.5rem;">
+                        <svg width="80" height="80" viewbox="0 0 80 80" fill="none" style="margin: 0 auto;"><circle cx="40" cy="40" r="35" fill="#f1f5f9" stroke="#94a3b8" stroke-width="3" /> <path d="M40 20L45 35L60 35L48 45L53 60L40 50L27 60L32 45L20 35L35 35L40 20Z" fill="#94a3b8" />
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1.75rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">Silver Member</h3>
+                    <p style="font-size: 2rem; font-weight: 800; color: var(--accent-text); margin-bottom: 1.5rem;">$0</p>
+                    <ul style="text-align: left; color: var(--muted-text); line-height: 2; margin-bottom: 2rem; list-style: none; padding: 0;">
+                        <li style="padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0;">✓</span> 5% off all purchases</li>
+                        <li style="padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0;">✓</span> Quarterly newsletters</li>
+                        <li style="padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0;">✓</span> Birthday rewards</li>
+                        <li style="padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0;">✓</span> Member events</li>
+                    </ul>
+                    <a href="H2.html#signup" class="cta-button" style="display: block; text-align: center;">Join Free</a>
+                </div>
+
+                <!-- Gold Tier -->
+                <div class="tier-card theme-surface" style="background: linear-gradient(to bottom, #333 0%, var(--card-bg) 100%); border: 3px solid #f59e0b; border-radius: 1.25rem; padding: 2.5rem 2rem; text-align: center; position: relative; box-shadow: 0 8px 24px rgba(245, 158, 11, 0.2); transform: scale(1.05);">
+                    <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: white; padding: 0.5rem 1.5rem; border-radius: 9999px; font-weight: 700; font-size: 0.875rem;" class="theme-inverse">
+                        GOLD ⭐
+                    </div>
+                    <div style="margin-top: 1rem; margin-bottom: 1.5rem;">
+                        <svg width="80" height="80" viewbox="0 0 80 80" fill="none" style="margin: 0 auto;"><circle cx="40" cy="40" r="35" fill="#333" stroke="#f59e0b" stroke-width="3" /> <path d="M40 20L45 35L60 35L48 45L53 60L40 50L27 60L32 45L20 35L35 35L40 20Z" fill="#f59e0b" />
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1.75rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">Gold Member</h3>
+                    <p style="font-size: 2rem; font-weight: 800; color: var(--accent-text); margin-bottom: 1.5rem;">$299<span style="font-size: 1rem; color: var(--muted-text);">/year</span></p>
+                    <ul style="text-align: left; color: var(--muted-text); line-height: 2; margin-bottom: 2rem; list-style: none; padding: 0;">
+                        <li style="padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0;">✓</span> 10% off all purchases</li>
+                        <li style="padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0;">✓</span> Free annual service</li>
+                        <li style="padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0;">✓</span> Priority scheduling</li>
+                        <li style="padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0;">✓</span> Exclusive previews</li>
+                        <li style="padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0;">✓</span> Concierge service</li>
+                    </ul>
+                    <a href="#" class="cta-button" style="display: block; text-align: center;">Upgrade to Gold</a>
+                </div>
+
+                <!-- Platinum Tier -->
+                <div class="tier-card theme-surface" style="background-color: var(--card-bg); border: 3px solid #0099ff; border-radius: 1.25rem; padding: 2.5rem 2rem; text-align: center; position: relative; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
+                    <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #0099ff 0%, #0f172a 100%); color: white; padding: 0.5rem 1.5rem; border-radius: 9999px; font-weight: 700; font-size: 0.875rem;" class="theme-inverse">
+                        PLATINUM 💎
+                    </div>
+                    <div style="margin-top: 1rem; margin-bottom: 1.5rem;">
+                        <svg width="80" height="80" viewbox="0 0 80 80" fill="none" style="margin: 0 auto;"><circle cx="40" cy="40" r="35" fill="#333" stroke="#0099ff" stroke-width="3" /> <path d="M40 20L45 35L60 35L48 45L53 60L40 50L27 60L32 45L20 35L35 35L40 20Z" fill="#0099ff" /> 
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1.75rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">Platinum Member</h3>
+                    <p style="font-size: 2rem; font-weight: 800; color: var(--accent-text); margin-bottom: 1.5rem;">$599<span style="font-size: 1rem; color: var(--muted-text);">/year</span></p>
+                    <ul style="text-align: left; color: var(--muted-text); line-height: 2; margin-bottom: 2rem; list-style: none; padding: 0;">
+                        <li style="padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0;">✓</span> 15% off all purchases</li>
+                        <li style="padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0;">✓</span> Unlimited free service</li>
+                        <li style="padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0;">✓</span> 24/7 VIP support</li>
+                        <li style="padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0;">✓</span> Loaner vehicles</li>
+                        <li style="padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0;">✓</span> Personal advisor</li>
+                        <li style="padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0;">✓</span> Private events</li>
+                    </ul>
+                    <a href="#" class="cta-button" style="display: block; text-align: center;">Join Platinum</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>LUXE MOTION</h3>
+                <ul>
+                    <li><a href="H2.html" style="color:red;">Home</a></li>
+                    <li><a href="AU.html" style="color:red;">About Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>SHOP</h3>
+                <ul>
+                    <li><a href="Slast.html" style="color:red;">Shop / Cars</a></li>
+                    <li><a href="P3.html" style="color:red;">Car Parts & Accessories</a></li>
+                    <li><a href="OF1.html" style="color:red;">Special Offers / Promotions</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>UPDATES</h3>
+                <ul>
+                    <li><a href="BLO.html" style="color:red;">Blog / News</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>SUPPORT</h3>
+                <ul>
+                    <li><a href="faq1.html" style="color:red;">Support / FAQ</a></li>
+                    <li><a href="CT.html" style="color:red;">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>ACCOUNT</h3>
+                <ul>
+                    <li><a href="garage_1.html" style="color:red;">Garage</a></li>
+               
+                </ul>
+
+                <div class="social-icons">
+                   <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+<a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+<a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW: Car Brand Icons Section -->
+        <div class="brand-icons-section">
+            <h3>OUR BRANDS</h3>
+            <div class="brand-icons">
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/toyota.jpg" alt="Toyota">
+                    </div>
+                    <div class="brand-icon-name">Toyota</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/honda.jpg" alt="Honda">
+                    </div>
+                    <div class="brand-icon-name">Honda</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/nissan.svg" alt="Nissan">
+                    </div>
+                    <div class="brand-icon-name">Nissan</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/hyundai.jpg" alt="Hyundai">
+                    </div>
+                    <div class="brand-icon-name">Hyundai</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/kia.jpg" alt="Kia">
+                    </div>
+                    <div class="brand-icon-name">Kia</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/ford.svg" alt="Ford">
+                    </div>
+                    <div class="brand-icon-name">Ford</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/chevrolet.jpg" alt="Chevrolet">
+                    </div>
+                    <div class="brand-icon-name">Chevrolet</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/bmw.svg" alt="BMW">
+                    </div>
+                    <div class="brand-icon-name">BMW</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/mercedes-benz.svg" alt="Mercedes-Benz">
+                    </div>
+                    <div class="brand-icon-name">Mercedes-Benz</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/audi.jpg" alt="Audi">
+                    </div>
+                    <div class="brand-icon-name">Audi</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="copyright">
+            <p>&copy; 2025 LuxeMotion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or default to dark
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        
+        // Update icon based on current theme
+        if (currentTheme === 'light') {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            // Toggle between dark and light themes
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update icon
+            if (newTheme === 'light') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Simple slider functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const dots = document.querySelectorAll('.slider-dot');
+            
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    // Remove active class from all dots
+                    dots.forEach(d => d.classList.remove('active'));
+                    // Add active class to clicked dot
+                    this.classList.add('active');
+                    // In a real implementation, this would change the slide
+                });
+            });
+        });
+
+
+    </script>
+ </body>
+</html>

@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Details - LuxeMotion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --blood-red: #8B0000;
+            --dark-red: #660000;
+            --black: #121212;
+            --dark-gray: #1a1a1a;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --card-bg: #1a1a1a;
+            --header-bg: #121212;
+            --footer-bg: #1a1a1a;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f5f5f5;
+            --text-color: #121212;
+            --card-bg: #ffffff;
+            --header-bg: #ffffff;
+            --footer-bg: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .circular-logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            border: 2px solid var(--blood-red);
+        }
+
+        .logo h1 {
+            color: var(--text-color);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+
+        .logo span {
+            color: #FF0000;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            position: relative;
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 0;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--blood-red);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-text);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--card-bg);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-top: 3px solid var(--blood-red);
+        }
+
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--blood-red);
+            color: var(--white);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-icons a {
+            color: var(--text-color);
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .nav-icons a:hover {
+            color: var(--accent-text);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .theme-toggle:hover {
+            color: var(--accent-text);
+        }
+
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            font-size: 14px;
+        }
+
+        .breadcrumb a {
+            color: var(--accent-text);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Car Details Section */
+        .car-details {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .car-details-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .car-image-section {
+            position: relative;
+        }
+
+        .main-car-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .car-thumbnails {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .car-thumbnail {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .car-thumbnail.active {
+            opacity: 1;
+            border: 2px solid var(--blood-red);
+        }
+
+        .car-info-section {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .car-title {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .car-subtitle {
+            color: var(--accent-text);
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .car-price {
+            font-size: 32px;
+            color: var(--accent-text);
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .car-description {
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .car-specs {
+            margin-bottom: 25px;
+        }
+
+        .specs-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--accent-text);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .spec-label {
+            color: var(--muted-text);
+        }
+
+        .spec-value {
+            font-weight: 600;
+        }
+
+        .car-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 15px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .test-drive-btn {
+            background-color: var(--blood-red);
+            color: var(--white);
+            border: 2px solid var(--blood-red);
+        }
+
+        .test-drive-btn:hover {
+            background-color: var(--dark-red);
+            border-color: var(--dark-red);
+        }
+
+        .add-to-garage-btn {
+            background-color: transparent;
+            color: var(--accent-text);
+            border: 2px solid var(--blood-red);
+        }
+
+        .add-to-garage-btn:hover {
+            background-color: var(--blood-red);
+            color: var(--white);
+        }
+
+        /* Features Section */
+        .car-features-section {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 60px 0 30px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 3px;
+            background-color: var(--blood-red);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            color: var(--accent-text);
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .feature-description {
+            color: var(--muted-text);
+            font-size: 14px;
+        }
+
+        /* Similar Cars Section */
+        .similar-cars-section {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .similar-cars-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .similar-car-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .similar-car-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .similar-car-img {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .similar-car-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .similar-car-card:hover .similar-car-img img {
+            transform: scale(1.05);
+        }
+
+        .similar-car-content {
+            padding: 20px;
+        }
+
+        .similar-car-name {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .similar-car-price {
+            color: var(--accent-text);
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .similar-car-link {
+            display: inline-block;
+            color: var(--accent-text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .similar-car-link:hover {
+            color: var(--accent-hover);
+        }
+
+        /* NEW: Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--card-bg);
+            border-left: 5px solid var(--blood-red);
+            border-radius: 8px;
+            padding: 15px 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            max-width: 350px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+
+        .notification.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .notification-icon {
+            font-size: 24px;
+            color: var(--accent-text);
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .notification-message {
+            font-size: 14px;
+            color: var(--muted-text);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            padding: 60px 0 20px;
+            transition: background-color 0.3s;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 30px;
+        }
+
+        .footer-column h3 {
+            color: var(--accent-text);
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--blood-red);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--muted-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent-text);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--bg-color);
+            border-radius: 50%;
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--blood-red);
+            transform: translateY(-3px);
+        }
+
+        .brand-icons-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 20px;
+        }
+
+        .brand-icons-section h3 {
+            color: var(--accent-text);
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .brand-icons-section h3::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 2px;
+            background-color: var(--blood-red);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .brand-icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .brand-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80px;
+            transition: transform 0.3s;
+        }
+
+        .brand-icon:hover {
+            transform: translateY(-5px);
+        }
+
+        .brand-icon-img {
+            width: 60px;
+            height: 60px;
+            background-color: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .brand-icon-img img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .brand-icon-name {
+            font-size: 12px;
+            text-align: center;
+            color: var(--muted-text);
+            font-weight: 500;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--muted-text);
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .footer-content {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .similar-cars-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .car-details-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .similar-cars-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .car-actions {
+                flex-direction: column;
+            }
+            
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .brand-icons {
+                gap: 20px;
+            }
+            
+            .brand-icon {
+                width: 70px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul li a span {
+                display: none;
+            }
+            
+            nav ul li a i {
+                font-size: 20px;
+            }
+            
+            .brand-icons {
+                gap: 15px;
+            }
+            
+            .brand-icon {
+                width: 60px;
+            }
+            
+            .brand-icon-img {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .brand-icon-img img {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .brand-icon-name {
+                font-size: 10px;
+            }
+        }
+    </style>
+<link rel="stylesheet" href="theme.css?v=2">
+<link rel="stylesheet" href="mobile.css?v=3">
+<script src="mobile.js?v=3" defer></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="https://www.shutterstock.com/image-vector/lm-letter-vector-logo-260nw-633760886.jpg" alt="LuxeMotion Logo" class="circular-logo-img">
+                <h1>Luxe<span>Motion</span></h1>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="H2.html"><i class="fas fa-home"></i> <span>Home</span></a></li>
+                    <li><a href="AU.html"><i class="fas fa-info-circle"></i> <span>About</span></a></li>
+
+                    <li class="dropdown">
+                        <a href="Slast.html"><i class="fas fa-shopping-cart"></i> 
+                            <span>Shop</span> <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="Toyota.html">Toyota</a>
+                            <a href="Honda.html">Honda</a>
+                            <a href="bmw.html">BMW</a>
+                            <a href="Slast.html">Nissan</a>
+                            <a href="Slast.html">Hyundai</a>
+                            <a href="Slast.html">Kai</a>
+                        </div>
+                    </li>
+                     
+                     <li class="dropdown">
+                        <a href="Slast.html"><i class="fas fa-flag"></i> <span>Brands</span> <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="japan.html">Japanese</a>
+                            <a href="German.html">German</a>
+                            <a href="japan.html">Korean</a>
+                            <a href="German.html">American</a>
+                           
+                        </div>
+                    </li>
+
+                     <li><a href="P3.html"><i class="fas fa-cogs"></i> <span>Parts</span></a></li>
+
+                    <li><a href="OF1.html"><i class="fas fa-tag"></i> <span>Offers</span></a></li>
+
+                    <li><a href="BLO.html"><i class="fas fa-newspaper"></i> <span>Blog</span></a></li>
+
+                    <li><a href="faq1.html"><i class="fas fa-question-circle"></i> <span>FAQ</span></a></li>
+
+                    <li><a href="CT.html"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-icons">
+                <a href="garage_1.html" title="Garage"><i class="fas fa-warehouse"></i></a>
+                <!-- Updated User Icon - Now Clickable -->
+                <a href="#" class="user-icon" title="Account" id="userIcon">
+                    <i class="fas fa-user"></i>
+                </a>
+
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+
+    <div class="breadcrumb">
+        <a href="H2.html">Home</a> &gt; 
+        <a href="Slast.html">Shop</a> &gt; 
+        <span id="breadcrumbCarName">Car Details</span>
+    </div>
+
+    <section class="car-details">
+        <div class="car-details-container">
+            <div class="car-image-section">
+                <img id="mainCarImage" src="" alt="Car Image" class="main-car-image">
+                <div class="car-thumbnails" id="thumbnailContainer">
+                    <!-- Thumbnails will be loaded by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="car-info-section">
+                <h1 id="carTitle" class="car-title">Car Title</h1>
+                <div id="carSubtitle" class="car-subtitle">Car Subtitle</div>
+                <div id="carPrice" class="car-price">$0</div>
+                
+                <p id="carDescription" class="car-description">
+                    Car description will appear here.
+                </p>
+                
+                <div class="car-specs">
+                    <h3 class="specs-title">Key Specifications</h3>
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <span class="spec-label">Engine:</span>
+                            <span id="specEngine" class="spec-value">-</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Horsepower:</span>
+                            <span id="specHorsepower" class="spec-value">-</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Torque:</span>
+                            <span id="specTorque" class="spec-value">-</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">0-60 mph:</span>
+                            <span id="specAcceleration" class="spec-value">-</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Transmission:</span>
+                            <span id="specTransmission" class="spec-value">-</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Drivetrain:</span>
+                            <span id="specDrivetrain" class="spec-value">-</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Fuel Economy:</span>
+                            <span id="specFuelEconomy" class="spec-value">-</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Seating Capacity:</span>
+                            <span id="specSeating" class="spec-value">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="car-actions">
+                    <a href="#" class="action-btn test-drive-btn">Schedule Test Drive</a>
+                    <button class="action-btn add-to-garage-btn" id="addToGarageBtn">Add to Garage</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="car-features-section">
+        <div class="section-title">
+            <h2>PREMIUM FEATURES</h2>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-tachometer-alt"></i>
+                </div>
+                <h3 class="feature-title">Performance</h3>
+                <p class="feature-description">Advanced drive system for exceptional handling and traction.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3 class="feature-title">Technology</h3>
+                <p class="feature-description">Advanced digital cockpit with premium display and connectivity.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-title">Safety</h3>
+                <p class="feature-description">Comprehensive safety suite including collision warning and assistance systems.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chair"></i>
+                </div>
+                <h3 class="feature-title">Comfort</h3>
+                <p class="feature-description">Premium upholstery, climate control, and ergonomic seating.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-music"></i>
+                </div>
+                <h3 class="feature-title">Entertainment</h3>
+                <p class="feature-description">Premium sound system with multiple speakers and advanced audio.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-car"></i>
+                </div>
+                <h3 class="feature-title">Design</h3>
+                <p class="feature-description">Stylish exterior with aerodynamic design and premium finishes.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="similar-cars-section">
+        <div class="section-title">
+            <h2>SIMILAR CARS</h2>
+        </div>
+        
+        <div class="similar-cars-grid" id="similarCarsGrid">
+            <!-- Similar cars will be loaded by JavaScript -->
+        </div>
+    </section>
+
+    <!-- NEW: Notification Element -->
+    <div class="notification" id="notification">
+        <div class="notification-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="notification-content">
+            <div class="notification-title" id="notificationTitle">Added to Garage!</div>
+            <div class="notification-message" id="notificationMessage">Your car has been added to your garage successfully.</div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+
+    <div class="footer-column">
+        <h3>LUXE MOTION</h3>
+        <ul>
+            <li>
+                <a href="H2.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   Home
+                </a>
+            </li>
+            <li>
+                <a href="AU.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   About Us
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="footer-column">
+        <h3>SHOP</h3>
+        <ul>
+            <li>
+                <a href="Slast.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   Shop / Cars
+                </a>
+            </li>
+            <li>
+                <a href="P3.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   Car Parts & Accessories
+                </a>
+            </li>
+            <li>
+                <a href="OF1.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   Special Offers / Promotions
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="footer-column">
+        <h3>UPDATES</h3>
+        <ul>
+            <li>
+                <a href="BLO.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   Blog / News
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="footer-column">
+        <h3>SUPPORT</h3>
+        <ul>
+            <li>
+                <a href="faq1.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   Support / FAQ
+                </a>
+            </li>
+            <li>
+                <a href="CT.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   Contact
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="footer-column">
+        <h3>ACCOUNT</h3>
+        <ul>
+            <li>
+                <a href="garage_1.html"
+                   style="color:red; text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline';"
+                   onmouseout="this.style.textDecoration='none';">
+                   Garage
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+<a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+<a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+<a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+
+        </div>
+    </div>
+
+</div>
+        <div class="brand-icons-section">
+            <h3>OUR BRANDS</h3>
+            <div class="brand-icons">
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/toyota.jpg" alt="Toyota">
+                    </div>
+                    <div class="brand-icon-name">Toyota</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/honda.jpg" alt="Honda">
+                    </div>
+                    <div class="brand-icon-name">Honda</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/nissan.svg" alt="Nissan">
+                    </div>
+                    <div class="brand-icon-name">Nissan</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/hyundai.jpg" alt="Hyundai">
+                    </div>
+                    <div class="brand-icon-name">Hyundai</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/kia.jpg" alt="Kia">
+                    </div>
+                    <div class="brand-icon-name">Kia</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/ford.svg" alt="Ford">
+                    </div>
+                    <div class="brand-icon-name">Ford</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/chevrolet.jpg" alt="Chevrolet">
+                    </div>
+                    <div class="brand-icon-name">Chevrolet</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/bmw.svg" alt="BMW">
+                    </div>
+                    <div class="brand-icon-name">BMW</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/mercedes-benz.svg" alt="Mercedes-Benz">
+                    </div>
+                    <div class="brand-icon-name">Mercedes-Benz</div>
+                </div>
+                <div class="brand-icon">
+                    <div class="brand-icon-img">
+                        <img src="assets/brands/audi.jpg" alt="Audi">
+                    </div>
+                    <div class="brand-icon-name">Audi</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 LuxeMotion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or default to dark
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        
+        // Update icon based on current theme
+        if (currentTheme === 'light') {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            // Toggle between dark and light themes
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update icon
+            if (newTheme === 'light') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Thumbnail image switching
+        function setupThumbnailSwitching() {
+            const thumbnails = document.querySelectorAll('.car-thumbnail');
+            const mainImage = document.getElementById('mainCarImage');
+            
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', () => {
+                    // Remove active class from all thumbnails
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked thumbnail
+                    thumbnail.classList.add('active');
+                    // Change main image source
+                    mainImage.src = thumbnail.src;
+                });
+            });
+        }
+
+        // Car database - matches the cars from shop.html
+        const carDatabase = {
+            '1': {
+                name: 'Camry XSE',
+                subtitle: 'Reliable & Efficient',
+                price: 32000,
+                description: 'The Toyota Camry XSE combines sleek styling with advanced technology and impressive fuel efficiency. With its powerful yet efficient engine and comfortable interior, this sedan delivers a premium driving experience for everyday commutes and long journeys alike.',
+                specs: {
+                    engine: '2.5L 4-Cylinder',
+                    horsepower: '203 HP',
+                    torque: '184 lb-ft',
+                    acceleration: '7.9 seconds',
+                    transmission: '8-Speed Automatic',
+                    drivetrain: 'Front-Wheel Drive',
+                    fuelEconomy: '32 MPG Combined',
+                    seating: '5'
+                },
+                images: [
+                    'https://tse3.mm.bing.net/th/id/OIP.tnTn05sez-T51T_mchYIzgAAAA?rs=1&pid=ImgDetMain&o=7&rm=3',
+                    'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '2': {
+                name: 'Accord Touring',
+                subtitle: 'Sophisticated Performance',
+                price: 34500,
+                description: 'The Honda Accord Touring offers a perfect blend of sophistication, performance, and advanced technology. With its refined interior, powerful yet efficient engine, and comprehensive suite of safety features, this sedan redefines what a midsize car can be.',
+                specs: {
+                    engine: '1.5L Turbo 4-Cylinder',
+                    horsepower: '192 HP',
+                    torque: '192 lb-ft',
+                    acceleration: '7.6 seconds',
+                    transmission: 'CVT Automatic',
+                    drivetrain: 'Front-Wheel Drive',
+                    fuelEconomy: '33 MPG Combined',
+                    seating: '5'
+                },
+                images: [
+                    'https://th.bing.com/th/id/R.7a4d5769a5f07f05d2b4a94926e67e60?rik=XZM5TUFXIZVAaQ&riu=http%3a%2f%2fhondanewspecs.com%2fwp-content%2fuploads%2f2023%2f10%2fScreenshot-2023-10-16-082421.png&ehk=tKmNuf1pI0eAz5hO3H0rXytWKCUpAGr%2fhIbRBvM%2fJrA%3d&risl=&pid=ImgRaw&r=0',
+                    'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '3': {
+                name: 'Sonata Limited',
+                subtitle: 'Modern & Stylish',
+                price: 30000,
+                description: 'The Hyundai Sonata Limited combines striking design with innovative technology and premium comfort features. With its spacious cabin, advanced safety systems, and efficient performance, this sedan offers exceptional value and style.',
+                specs: {
+                    engine: '2.5L 4-Cylinder',
+                    horsepower: '191 HP',
+                    torque: '181 lb-ft',
+                    acceleration: '8.0 seconds',
+                    transmission: '8-Speed Automatic',
+                    drivetrain: 'Front-Wheel Drive',
+                    fuelEconomy: '31 MPG Combined',
+                    seating: '5'
+                },
+                images: [
+                    'https://www.earnhardthyundai.com/blogs/4378/wp-content/uploads/2021/08/2021-sonata-sel-plus-portofino-gray-1_o-1536x864.jpg',
+                    'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '4': {
+                name: 'Fusion Titanium',
+                subtitle: 'American Innovation',
+                price: 33200,
+                description: 'The Ford Fusion Titanium offers a compelling combination of style, technology, and performance. With its available all-wheel drive, powerful engine options, and premium features, this sedan delivers an engaging driving experience.',
+                specs: {
+                    engine: '2.0L EcoBoost 4-Cylinder',
+                    horsepower: '245 HP',
+                    torque: '275 lb-ft',
+                    acceleration: '7.1 seconds',
+                    transmission: '6-Speed Automatic',
+                    drivetrain: 'All-Wheel Drive',
+                    fuelEconomy: '25 MPG Combined',
+                    seating: '5'
+                },
+                images: [
+                    'https://www.perfectautocollection.com/imagetag/54/main/l/Used-2019-Ford-Fusion-Titanium-Sedan-4D-1575947453.jpg',
+                    'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '5': {
+                name: '3 Series 330i',
+                subtitle: 'German Engineering Excellence',
+                price: 43000,
+                description: 'The BMW 3 Series 330i represents the pinnacle of sports sedan performance and luxury. With its perfect 50/50 weight distribution, responsive handling, and premium interior, this car delivers the ultimate driving experience.',
+                specs: {
+                    engine: '2.0L Turbo 4-Cylinder',
+                    horsepower: '255 HP',
+                    torque: '295 lb-ft',
+                    acceleration: '5.6 seconds',
+                    transmission: '8-Speed Automatic',
+                    drivetrain: 'Rear-Wheel Drive',
+                    fuelEconomy: '30 MPG Combined',
+                    seating: '5'
+                },
+                images: [
+                    'https://www.groovecar.com/media/stock/images/stills/2022/bmw/3-series/330e-4dr-sedan/2022-bmw-3-series-330e-4dr-sedan-046-large.jpg',
+                    'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '6': {
+                name: 'C-Class C300',
+                subtitle: 'Luxury & Performance',
+                price: 44600,
+                description: 'The Mercedes-Benz C-Class C300 combines sophisticated styling with advanced technology and exceptional comfort. With its premium interior, smooth ride, and powerful yet efficient engine, this sedan redefines luxury in its class.',
+                specs: {
+                    engine: '2.0L Turbo 4-Cylinder',
+                    horsepower: '255 HP',
+                    torque: '273 lb-ft',
+                    acceleration: '5.9 seconds',
+                    transmission: '9-Speed Automatic',
+                    drivetrain: 'Rear-Wheel Drive',
+                    fuelEconomy: '28 MPG Combined',
+                    seating: '5'
+                },
+                images: [
+                    'https://vehicle-images.dealerinspire.com/9abb-11001114/W1KAF4GB9PR125897/e97f1cb67b1c9f1e13216db0f36e036b.jpg',
+                    'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '7': {
+                name: 'RAV4 Adventure',
+                subtitle: 'Ready for Adventure',
+                price: 34500,
+                description: 'The Toyota RAV4 Adventure is designed for those who seek adventure both on and off the road. With its rugged styling, advanced all-wheel drive system, and versatile cargo space, this SUV is ready for any journey.',
+                specs: {
+                    engine: '2.5L 4-Cylinder',
+                    horsepower: '203 HP',
+                    torque: '184 lb-ft',
+                    acceleration: '8.0 seconds',
+                    transmission: '8-Speed Automatic',
+                    drivetrain: 'All-Wheel Drive',
+                    fuelEconomy: '30 MPG Combined',
+                    seating: '5'
+                },
+                images: [
+                    'https://th.bing.com/th/id/R.50909956990117bc3fd3f021337f9135?rik=M%2bLKJPoT56ErpA&pid=ImgRaw&r=0',
+                    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '8': {
+                name: 'Explorer Platinum',
+                subtitle: 'American Luxury SUV',
+                price: 52500,
+                description: 'The Ford Explorer Platinum combines three-row versatility with premium luxury and powerful performance. With its spacious interior, advanced technology, and robust towing capability, this SUV is perfect for family adventures.',
+                specs: {
+                    engine: '3.0L Twin-Turbo V6',
+                    horsepower: '365 HP',
+                    torque: '380 lb-ft',
+                    acceleration: '5.8 seconds',
+                    transmission: '10-Speed Automatic',
+                    drivetrain: 'All-Wheel Drive',
+                    fuelEconomy: '21 MPG Combined',
+                    seating: '7'
+                },
+                images: [
+                    'https://file.kelleybluebookimages.com/kbb/base/house/2020/2020-Ford-Explorer-FrontSide_FTEXPLI2001_640x480.jpg',
+                    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '9': {
+                name: 'Q7 Premium',
+                subtitle: 'Luxury SUV Performance',
+                price: 68200,
+                description: 'The Audi Q7 Premium combines sophisticated design with advanced technology and powerful performance. With its spacious three-row interior and quattro all-wheel drive, this luxury SUV delivers comfort and capability in equal measure.',
+                specs: {
+                    engine: '3.0L V6 Turbo',
+                    horsepower: '335 HP',
+                    torque: '369 lb-ft',
+                    acceleration: '5.7 seconds',
+                    transmission: '8-Speed Automatic',
+                    drivetrain: 'All-Wheel Drive',
+                    fuelEconomy: '22 MPG Combined',
+                    seating: '7'
+                },
+                images: [
+                    'https://tse1.mm.bing.net/th/id/OIP.zmenUn0jcnZ-NEq3WfJwXQHaFj?rs=1&pid=ImgDetMain&o=7&rm=3',
+                    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '10': {
+                name: 'F-150 Raptor',
+                subtitle: 'Off-Road Dominance',
+                price: 76775,
+                description: 'The Ford F-150 Raptor is the ultimate high-performance off-road truck. With its specialized off-road suspension, powerful EcoBoost engine, and aggressive styling, this truck is built to dominate any terrain.',
+                specs: {
+                    engine: '3.5L Twin-Turbo EcoBoost V6',
+                    horsepower: '450 HP',
+                    torque: '510 lb-ft',
+                    acceleration: '5.2 seconds',
+                    transmission: '10-Speed Automatic',
+                    drivetrain: 'Four-Wheel Drive',
+                    fuelEconomy: '18 MPG Combined',
+                    seating: '5'
+                },
+                images: [
+                    'https://th.bing.com/th/id/R.003ba0fc1b8cb2a7cdeaf04efebbea33?rik=ZIa33Kh%2fGynz0w&riu=http%3a%2f%2fwww.hdcarwallpapers.com%2fwalls%2fford_f_150_raptor_2017-wide.jpg&ehk=BK3kiPdG9EzzCRbm1NoWFVDPXNajOwCPvhor5nqz6Z8%3d&risl=&pid=ImgRaw&r=0',
+                    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '11': {
+                name: 'Tacoma TRD Pro',
+                subtitle: 'Off-Road Ready',
+                price: 45600,
+                description: 'The Toyota Tacoma TRD Pro is the ultimate off-road midsize truck. With its specialized off-road suspension, rugged styling, and proven reliability, this truck is built to tackle the toughest trails with confidence.',
+                specs: {
+                    engine: '3.5L V6',
+                    horsepower: '278 HP',
+                    torque: '265 lb-ft',
+                    acceleration: '7.7 seconds',
+                    transmission: '6-Speed Automatic',
+                    drivetrain: 'Four-Wheel Drive',
+                    fuelEconomy: '20 MPG Combined',
+                    seating: '5'
+                },
+                images: [
+                    'https://bringatrailer.com/wp-content/uploads/2023/05/2021_toyota_tacoma_img_6944-1-47800.jpg',
+                    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '12': {
+                name: 'Silverado High Country',
+                subtitle: 'American Luxury Truck',
+                price: 58900,
+                description: 'The Chevrolet Silverado High Country combines rugged capability with premium luxury. With its powerful engine options, advanced towing technology, and upscale interior, this truck redefines what a full-size pickup can be.',
+                specs: {
+                    engine: '5.3L V8',
+                    horsepower: '355 HP',
+                    torque: '383 lb-ft',
+                    acceleration: '6.8 seconds',
+                    transmission: '10-Speed Automatic',
+                    drivetrain: 'Four-Wheel Drive',
+                    fuelEconomy: '18 MPG Combined',
+                    seating: '5'
+                },
+                images: [
+                    'https://st.automobilemag.com/uploads/sites/11/2018/08/2019-Chevrolet-Silverado-1500-High-Country-11.jpg',
+                    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '13': {
+                name: 'GT-R Nismo',
+                subtitle: 'Japanese Supercar',
+                price: 210000,
+                description: 'The Nissan GT-R Nismo represents the pinnacle of Japanese performance engineering. With its hand-built engine, advanced all-wheel drive system, and race-inspired aerodynamics, this supercar delivers breathtaking performance on both road and track.',
+                specs: {
+                    engine: '3.8L Twin-Turbo V6',
+                    horsepower: '600 HP',
+                    torque: '481 lb-ft',
+                    acceleration: '2.9 seconds',
+                    transmission: '6-Speed Dual-Clutch',
+                    drivetrain: 'All-Wheel Drive',
+                    fuelEconomy: '19 MPG Combined',
+                    seating: '4'
+                },
+                images: [
+                    'https://tse4.mm.bing.net/th/id/OIP.vcgt5yWbGSLr0ohRi-uUKAHaEK?w=768&h=432&rs=1&pid=ImgDetMain&o=7&rm=3',
+                    'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '14': {
+                name: 'Corvette Stingray',
+                subtitle: 'American Supercar',
+                price: 68900,
+                description: 'The Chevrolet Corvette Stingray represents a new era of American performance. With its mid-engine layout, lightweight construction, and powerful V8 engine, this sports car delivers supercar performance at an accessible price.',
+                specs: {
+                    engine: '6.2L V8',
+                    horsepower: '495 HP',
+                    torque: '470 lb-ft',
+                    acceleration: '2.9 seconds',
+                    transmission: '8-Speed Dual-Clutch',
+                    drivetrain: 'Rear-Wheel Drive',
+                    fuelEconomy: '19 MPG Combined',
+                    seating: '2'
+                },
+                images: [
+                    'https://th.bing.com/th/id/R.e99e64b5d7ca870bf913058f209a55e3?rik=fnGPTGQOx9crQA&riu=http%3a%2f%2frichtigteuer.de%2fwp-content%2fuploads%2f2013%2f07%2fChevrolet-Corvette-C7-Stingray.jpg&ehk=oWgYfOLebwuwp6uG0JAnyWev22QFsc2JkDxyZXRDA4g%3d&risl=&pid=ImgRaw&r=0',
+                    'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '15': {
+                name: 'M5 Competition',
+                subtitle: 'German Engineering Excellence',
+                price: 105900,
+                description: 'The BMW M5 Competition combines luxury sedan comfort with supercar performance. With its 617-horsepower twin-turbo V8 engine and advanced all-wheel drive system, this executive sports sedan delivers breathtaking acceleration and precision handling.',
+                specs: {
+                    engine: '4.4L V8 Twin-Turbo',
+                    horsepower: '617 HP',
+                    torque: '553 lb-ft',
+                    acceleration: '3.1 seconds',
+                    transmission: '8-Speed Automatic',
+                    drivetrain: 'All-Wheel Drive',
+                    fuelEconomy: '20 MPG Combined',
+                    seating: '5'
+                },
+                images: [
+                    'https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                    'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+                    'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '16': {
+                name: 'A5 Coupe',
+                subtitle: 'German Design & Performance',
+                price: 48500,
+                description: 'The Audi A5 Coupe combines stunning design with sophisticated performance. With its sleek coupe profile, premium interior, and advanced technology, this car delivers a perfect balance of style, comfort, and driving dynamics.',
+                specs: {
+                    engine: '2.0L Turbo 4-Cylinder',
+                    horsepower: '261 HP',
+                    torque: '273 lb-ft',
+                    acceleration: '5.7 seconds',
+                    transmission: '7-Speed Dual-Clutch',
+                    drivetrain: 'All-Wheel Drive',
+                    fuelEconomy: '29 MPG Combined',
+                    seating: '4'
+                },
+                images: [
+                    'https://tse2.mm.bing.net/th/id/OIP.vOcaFR1YvYwiBJhD7GNMvAHaDt?w=800&h=400&rs=1&pid=ImgDetMain&o=7&rm=3',
+                    'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '17': {
+                name: 'Stinger GT',
+                subtitle: 'Korean Performance',
+                price: 52800,
+                description: 'The Kia Stinger GT is a revolutionary sports sedan that combines stunning design with exhilarating performance. With its powerful twin-turbo V6 engine, rear-wheel drive architecture, and premium features, this car redefines what a Korean performance vehicle can be.',
+                specs: {
+                    engine: '3.3L Twin-Turbo V6',
+                    horsepower: '365 HP',
+                    torque: '376 lb-ft',
+                    acceleration: '4.7 seconds',
+                    transmission: '8-Speed Automatic',
+                    drivetrain: 'All-Wheel Drive',
+                    fuelEconomy: '22 MPG Combined',
+                    seating: '5'
+                },
+                images: [
+                    'https://tse4.mm.bing.net/th/id/OIP.nIGs1RgWaJIXcdjpKmK2CwHaEK?rs=1&pid=ImgDetMain&o=7&rm=3',
+                    'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            },
+            '18': {
+                name: 'E-Class Cabriolet',
+                subtitle: 'German Luxury Convertible',
+                price: 75200,
+                description: 'The Mercedes-Benz E-Class Cabriolet combines open-air freedom with sophisticated luxury. With its refined interior, advanced technology, and smooth power-retractable soft top, this convertible delivers an unparalleled driving experience.',
+                specs: {
+                    engine: '3.0L Turbo Inline-6',
+                    horsepower: '362 HP',
+                    torque: '369 lb-ft',
+                    acceleration: '4.9 seconds',
+                    transmission: '9-Speed Automatic',
+                    drivetrain: 'Rear-Wheel Drive',
+                    fuelEconomy: '25 MPG Combined',
+                    seating: '4'
+                },
+                images: [
+                    'https://tse2.mm.bing.net/th/id/OIP.YfcmeigHD5-7k6LztpplDQHaE8?w=1752&h=1168&rs=1&pid=ImgDetMain&o=7&rm=3',
+                    'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
+                    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+                ]
+            }
+        };
+
+        // Function to load car data from URL parameters
+        function loadCarData() {
+            // Get car ID from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const carId = urlParams.get('id');
+            
+            // If no car ID is provided, use default data
+            if (!carId) {
+                // Default to BMW M5 Competition
+                const defaultCarId = '15';
+                const carData = carDatabase[defaultCarId];
+                updatePageContent(carData);
+                loadSimilarCars(defaultCarId);
+                return;
+            }
+            
+            // Get car data from database
+            const carData = carDatabase[carId];
+            
+            if (carData) {
+                updatePageContent(carData);
+                loadSimilarCars(carId);
+            } else {
+                // If car ID not found, redirect to shop page
+                window.location.href = 'Slast.html';
+            }
+        }
+        
+        // Function to update page content with car data
+        function updatePageContent(carData) {
+            // Update page content with car data
+            document.getElementById('breadcrumbCarName').textContent = carData.name;
+            document.getElementById('carTitle').textContent = carData.name;
+            document.getElementById('carSubtitle').textContent = carData.subtitle;
+            document.getElementById('carPrice').textContent = `$${carData.price.toLocaleString()}`;
+            document.getElementById('carDescription').textContent = carData.description;
+            
+            // Update specifications
+            document.getElementById('specEngine').textContent = carData.specs.engine;
+            document.getElementById('specHorsepower').textContent = carData.specs.horsepower;
+            document.getElementById('specTorque').textContent = carData.specs.torque;
+            document.getElementById('specAcceleration').textContent = carData.specs.acceleration;
+            document.getElementById('specTransmission').textContent = carData.specs.transmission;
+            document.getElementById('specDrivetrain').textContent = carData.specs.drivetrain;
+            document.getElementById('specFuelEconomy').textContent = carData.specs.fuelEconomy;
+            document.getElementById('specSeating').textContent = carData.specs.seating;
+            
+            // Update images
+            const mainImage = document.getElementById('mainCarImage');
+            mainImage.src = carData.images[0];
+            mainImage.alt = carData.name;
+            
+            // Update thumbnails
+            const thumbnailContainer = document.querySelector('.car-thumbnails');
+            thumbnailContainer.innerHTML = '';
+            
+            carData.images.forEach((image, index) => {
+                const thumbnail = document.createElement('img');
+                thumbnail.src = image;
+                thumbnail.alt = `${carData.name} Thumbnail ${index + 1}`;
+                thumbnail.className = 'car-thumbnail';
+                if (index === 0) thumbnail.classList.add('active');
+                
+                thumbnailContainer.appendChild(thumbnail);
+            });
+            
+            // Set up thumbnail switching after they're loaded
+            setupThumbnailSwitching();
+        }
+        
+        // Function to load similar cars
+        function loadSimilarCars(currentCarId) {
+            const similarCarsGrid = document.getElementById('similarCarsGrid');
+            similarCarsGrid.innerHTML = '';
+            
+            // Get current car data
+            const currentCar = carDatabase[currentCarId];
+            
+            // Find similar cars (same type or similar price range)
+            const similarCars = Object.values(carDatabase)
+                .filter(car => car.name !== currentCar.name)
+                .sort((a, b) => {
+                    // Sort by price similarity
+                    const priceDiffA = Math.abs(a.price - currentCar.price);
+                    const priceDiffB = Math.abs(b.price - currentCar.price);
+                    return priceDiffA - priceDiffB;
+                })
+                .slice(0, 3); // Get top 3 similar cars
+            
+            // Display similar cars
+            similarCars.forEach(car => {
+                const carCard = document.createElement('div');
+                carCard.className = 'similar-car-card';
+                
+                carCard.innerHTML = `
+                    <div class="similar-car-img">
+                        <img src="${car.images[0]}" alt="${car.name}">
+                    </div>
+                    <div class="similar-car-content">
+                        <h3 class="similar-car-name">${car.name}</h3>
+                        <div class="similar-car-price">$${car.price.toLocaleString()}</div>
+                        <a href="viewdetails.html?id=${Object.keys(carDatabase).find(key => carDatabase[key].name === car.name)}" class="similar-car-link">View Details</a>
+                    </div>
+                `;
+                
+                similarCarsGrid.appendChild(carCard);
+            });
+        }
+        
+        // NEW: Function to show notification
+        function showNotification(title, message) {
+            const notification = document.getElementById('notification');
+            const notificationTitle = document.getElementById('notificationTitle');
+            const notificationMessage = document.getElementById('notificationMessage');
+            
+            notificationTitle.textContent = title;
+            notificationMessage.textContent = message;
+            
+            notification.classList.add('active');
+            
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('active');
+            }, 3000);
+        }
+        
+        // NEW: Function to add car to garage
+        function addToGarage(carId) {
+            const carData = carDatabase[carId];
+            
+            if (!carData) {
+                showNotification('Error', 'Car data not found.');
+                return;
+            }
+            
+            // Get existing garage items or initialize empty array
+            let garageItems = JSON.parse(localStorage.getItem('garageItems')) || [];
+            
+            // Check if item already exists in garage
+            const existingItemIndex = garageItems.findIndex(item => item.id === carId);
+            
+            if (existingItemIndex !== -1) {
+                // If item exists, increase quantity
+                garageItems[existingItemIndex].quantity += 1;
+                showNotification('Updated Garage', `${carData.name} quantity increased in your garage.`);
+            } else {
+                // If item doesn't exist, add it
+                garageItems.push({
+                    id: carId,
+                    name: carData.name,
+                    price: carData.price,
+                    image: carData.images[0],
+                    brand: getBrandFromName(carData.name),
+                    quantity: 1
+                });
+                showNotification('Added to Garage', `${carData.name} has been added to your garage.`);
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('garageItems', JSON.stringify(garageItems));
+        }
+        
+        // NEW: Helper function to get brand from car name
+        function getBrandFromName(carName) {
+            if (carName.includes('Toyota') || carName.includes('Camry') || carName.includes('RAV4') || carName.includes('Tacoma')) {
+                return 'toyota';
+            } else if (carName.includes('Honda') || carName.includes('Accord')) {
+                return 'honda';
+            } else if (carName.includes('Nissan') || carName.includes('GT-R')) {
+                return 'nissan';
+            } else if (carName.includes('Hyundai') || carName.includes('Sonata')) {
+                return 'hyundai';
+            } else if (carName.includes('Kia') || carName.includes('Stinger')) {
+                return 'kia';
+            } else if (carName.includes('Ford') || carName.includes('Fusion') || carName.includes('Explorer') || carName.includes('F-150')) {
+                return 'ford';
+            } else if (carName.includes('Chevrolet') || carName.includes('Corvette') || carName.includes('Silverado')) {
+                return 'chevrolet';
+            } else if (carName.includes('BMW') || carName.includes('3 Series') || carName.includes('M5')) {
+                return 'bmw';
+            } else if (carName.includes('Mercedes') || carName.includes('C-Class') || carName.includes('E-Class')) {
+                return 'mercedes';
+            } else if (carName.includes('Audi') || carName.includes('A5') || carName.includes('Q7')) {
+                return 'audi';
+            }
+            return 'unknown';
+        }
+        
+        // Load car data when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCarData();
+            
+            // Add event listener to Add to Garage button
+            const addToGarageBtn = document.getElementById('addToGarageBtn');
+            addToGarageBtn.addEventListener('click', () => {
+                const urlParams = new URLSearchParams(window.location.search);
+                const carId = urlParams.get('id') || '15'; // Default to BMW M5 if no ID
+                addToGarage(carId);
+            });
+        });
+    </script>
+</body>
+</html>
