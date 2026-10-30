@@ -19,7 +19,7 @@ A responsive multi-page website for a premium car dealership, with brand pages, 
 
 ## Technologies
 
-HTML5, CSS3, JavaScript
+HTML5, CSS3, JavaScript, Font Awesome, Leaflet.js (interactive map)
 
 ## Run Locally
 
